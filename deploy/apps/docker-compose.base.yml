@@ -24,6 +24,8 @@ services:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
       - "${HOME}/data/letsencrypt:/letsencrypt"
       - "${HOME}/data/traefik:/config"
+    networks:
+      - base-network
 
   portainer:
     image: portainer/portainer-ee:latest
@@ -47,4 +49,9 @@ services:
       - "traefik.http.services.edge.loadbalancer.server.port=8000"
       - "traefik.http.routers.edge.service=edge"
       - "traefik.http.routers.edge.tls.certresolver=leresolver"
+    networks:
+      - base-network
 
+networks:
+    base-network:
+      name: apps
