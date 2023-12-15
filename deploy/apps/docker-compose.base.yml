@@ -19,6 +19,7 @@ services:
       - "--certificatesresolvers.resolver.acme.tlschallenge=true"
       - "--certificatesresolvers.resolver.acme.email=griffin@chst.dev"
       - "--certificatesresolvers.resolver.acme.storage=/letsencrypt/acme.json"
+      - "--certificatesresolvers.resolver.acme.httpchallenge.entrypoint=web"
     ports:
       - "443:443"
       - "80:80"
@@ -26,6 +27,11 @@ services:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
       - "${HOME}/data/letsencrypt:/letsencrypt"
       - "${HOME}/data/traefik:/config"
+    labels:
+      - "traefik.http.routers.http-catchall.rule=hostregexp('{host:.+}')"
+      - "traefik.http.routers.http-catchall.entrypoints=web"
+      - "traefik.http.routers.http-catchall.middlewares=redirect-to-https"
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
     networks:
       - base-network
 
@@ -40,18 +46,18 @@ services:
     labels:
       # Frontend
       - "traefik.enable=true"
-      - "traefik.http.routers.frontend.rule=Host(`portainer.chst.dev`)"
+      - "traefik.http.routers.frontend.rule=Host('portainer.chst.dev')"
       - "traefik.http.routers.frontend.entrypoints=websecure"
       - "traefik.http.services.frontend.loadbalancer.server.port=9000"
       - "traefik.http.routers.frontend.service=frontend"
-      - "traefik.http.routers.frontend.tls.certresolver=leresolver"
+      - "traefik.http.routers.frontend.tls.certresolver=resolver"
 
       # Edge
-      - "traefik.http.routers.edge.rule=Host(`edge.yourdomain.com`)"
+      - "traefik.http.routers.edge.rule=Host('edge.chst.dev')"
       - "traefik.http.routers.edge.entrypoints=websecure"
       - "traefik.http.services.edge.loadbalancer.server.port=8000"
       - "traefik.http.routers.edge.service=edge"
-      - "traefik.http.routers.edge.tls.certresolver=leresolver"
+      - "traefik.http.routers.edge.tls.certresolver=resolver"
     networks:
       - base-network
 
