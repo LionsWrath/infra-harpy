@@ -28,6 +28,11 @@ services:
       - "${HOME}/data/letsencrypt:/letsencrypt"
       - "${HOME}/data/traefik:/config"
     labels:
+      - "traefik.http.routers.api.rule=Host('traefik.chst.dev') && (PathPrefix('/api') || PathPrefix('/dashboard'))"
+      - "traefik.http.routers.api.service=api@internal"
+      - "traefik.http.routers.api.middlewares=auth"
+      - "traefik.http.middlewares.auth.basicauth.users=user:$$2y$$05$$gBrx9.pDBiqUxlN1HGyC9ugdCARYwePA8Pn.f7hqwyVzZNVXwf3TS"
+        #- "traefik.http.middlewares.testIPwhitelist.ipwhitelist.sourcerange=127.0.0.1/32, 192.168.1.7"
       - "traefik.http.routers.http-catchall.rule=hostregexp('{host:.+}')"
       - "traefik.http.routers.http-catchall.entrypoints=web"
       - "traefik.http.routers.http-catchall.middlewares=redirect-to-https"
@@ -36,7 +41,7 @@ services:
       - base-network
 
   portainer:
-    image: portainer/portainer-ee:latest
+    image: "portainer/portainer-ce:2.19.4"
     container_name: "portainer"
     command: -H unix:///var/run/docker.sock
     restart: always
