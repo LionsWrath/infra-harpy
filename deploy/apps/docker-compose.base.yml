@@ -11,7 +11,7 @@ services:
       - "--log.filepath=/config/traefik.log"
       - "--api=true"
       - "--api.dashboard=true"
-      - "--api.insecure=false"
+      - "--api.insecure=true"
       - "--pilot.dashboard=false"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
@@ -29,44 +29,51 @@ services:
       - $HOME/data/letsencrypt:/letsencrypt
       - $HOME/data/traefik:/config
     labels:
-      - "traefik.http.routers.api.rule=Host('192.168.18.23') && (PathPrefix('/api') || PathPrefix('/dashboard'))"
+      - "traefik.http.routers.api.rule=Host('traefik.chst.dev') && (PathPrefix('/api') || PathPrefix('/dashboard'))"
       - "traefik.http.routers.api.service=api@internal"
       - "traefik.http.routers.api.middlewares=auth"
       - "traefik.http.middlewares.auth.basicauth.users=user:$$2y$$05$$gBrx9.pDBiqUxlN1HGyC9ugdCARYwePA8Pn.f7hqwyVzZNVXwf3TS"
         #- "traefik.http.middlewares.testIPwhitelist.ipwhitelist.sourcerange=127.0.0.1/32, 192.168.1.7"
-      - "traefik.http.routers.http-catchall.rule=hostregexp('{host:.+}')"
-      - "traefik.http.routers.http-catchall.entrypoints=web"
-      - "traefik.http.routers.http-catchall.middlewares=redirect-to-https"
-      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+        #- "traefik.http.routers.http-catchall.rule=hostregexp('{host:.+}')"
+        #- "traefik.http.routers.http-catchall.entrypoints=web"
+        #- "traefik.http.routers.http-catchall.middlewares=redirect-to-https"
+        #- "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
     networks:
       - base-network
 
-  portainer:
-    image: "portainer/portainer-ce:2.19.4"
-    container_name: "portainer"
-    command: -H unix:///var/run/docker.sock
-    restart: always
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - $HOME/data/portainer:/data
-      - $HOME/data/secrets/portainer_key:/run/secrets/portainer
+  whoami:
+    image: "traefik/whoami"
+    container_name: "simple-service"
     labels:
-      # Frontend
       - "traefik.enable=true"
-      - "traefik.http.routers.frontend.rule=Host('portainer.chst.dev')"
-      - "traefik.http.routers.frontend.entrypoints=websecure"
-      - "traefik.http.services.frontend.loadbalancer.server.port=9000"
-      - "traefik.http.routers.frontend.service=frontend"
-      - "traefik.http.routers.frontend.tls.certresolver=leresolver"
+      - "traefik.http.routers.whoami.rule=Host(`whoami.chst.dev`)"
+      - "traefik.http.routers.whoami.entrypoints=web"
 
-      # Edge
-      - "traefik.http.routers.edge.rule=Host('edge.chst.dev')"
-      - "traefik.http.routers.edge.entrypoints=websecure"
-      - "traefik.http.services.edge.loadbalancer.server.port=8000"
-      - "traefik.http.routers.edge.service=edge"
-      - "traefik.http.routers.edge.tls.certresolver=leresolver"
-    networks:
-      - base-network
+  # portainer:
+  #   image: "portainer/portainer-ce:2.19.4"
+  #   container_name: "portainer"
+  #   command: -H unix:///var/run/docker.sock
+  #   restart: always
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock
+  #     - $HOME/data/portainer:/data
+  #     - $HOME/data/secrets/portainer_key:/run/secrets/portainer
+  #   labels:
+  #     # Frontend
+  #     - "traefik.enable=true"
+  #     - "traefik.http.routers.frontend.rule=Host('portainer.chst.dev')"
+  #     - "traefik.http.routers.frontend.entrypoints=websecure"
+  #     - "traefik.http.services.frontend.loadbalancer.server.port=9000"
+  #     - "traefik.http.routers.frontend.service=frontend"
+  #     - "traefik.http.routers.frontend.tls.certresolver=leresolver"
+
+  #     # Edge
+  #     - "traefik.http.routers.edge.rule=Host('edge.chst.dev')"
+  #     - "traefik.http.routers.edge.entrypoints=websecure"
+  #     - "traefik.http.services.edge.loadbalancer.server.port=8000"
+  #     - "traefik.http.routers.edge.service=edge"
+  #     - "traefik.http.routers.edge.tls.certresolver=leresolver"
+
 
 networks:
     base-network:
