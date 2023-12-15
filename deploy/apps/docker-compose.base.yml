@@ -16,7 +16,7 @@ services:
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
       - "--entrypoints.web.address=:80"
-      - "--entrypoints.websecure.address=:443"
+      # - "--entrypoints.websecure.address=:443"
       # - "--certificatesresolvers.leresolver.acme.tlschallenge=true"
       # - "--certificatesresolvers.leresolver.acme.email=griffin@chst.dev"
       # - "--certificatesresolvers.leresolver.acme.storage=/letsencrypt/acme.json"
@@ -24,6 +24,7 @@ services:
     ports:
       - "443:443"
       - "80:80"
+      - "8080:8080"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - $HOME/data/letsencrypt:/letsencrypt
@@ -46,8 +47,8 @@ services:
     container_name: "simple-service"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.whoami.rule=Path('/whoami')"
-      - "traefik.http.routers.whoami.entrypoints=web"
+      - "traefik.http.routers.whoami.rule=Host('whoami.localhost')"
+      - "traefik.http.routers.whoami.entrypoints=http"
 
   # portainer:
   #   image: "portainer/portainer-ce:2.19.4"
