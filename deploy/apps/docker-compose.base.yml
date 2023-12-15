@@ -17,10 +17,10 @@ services:
       - "--providers.docker.exposedbydefault=false"
       - "--entrypoints.web.address=:80"
       - "--entrypoints.websecure.address=:443"
-      - "--certificatesresolvers.leresolver.acme.tlschallenge=true"
-      - "--certificatesresolvers.leresolver.acme.email=griffin@chst.dev"
-      - "--certificatesresolvers.leresolver.acme.storage=/letsencrypt/acme.json"
-      - "--certificatesresolvers.leresolver.acme.httpchallenge.entrypoint=web"
+      # - "--certificatesresolvers.leresolver.acme.tlschallenge=true"
+      # - "--certificatesresolvers.leresolver.acme.email=griffin@chst.dev"
+      # - "--certificatesresolvers.leresolver.acme.storage=/letsencrypt/acme.json"
+      # - "--certificatesresolvers.leresolver.acme.httpchallenge.entrypoint=web"
     ports:
       - "443:443"
       - "80:80"
@@ -29,7 +29,7 @@ services:
       - $HOME/data/letsencrypt:/letsencrypt
       - $HOME/data/traefik:/config
     labels:
-      - "traefik.http.routers.api.rule=Host('traefik.chst.dev') && (PathPrefix('/api') || PathPrefix('/dashboard'))"
+      - "traefik.http.routers.api.rule=PathPrefix('/api') || PathPrefix('/dashboard')"
       - "traefik.http.routers.api.service=api@internal"
       - "traefik.http.routers.api.middlewares=auth"
       - "traefik.http.middlewares.auth.basicauth.users=user:$$2y$$05$$gBrx9.pDBiqUxlN1HGyC9ugdCARYwePA8Pn.f7hqwyVzZNVXwf3TS"
@@ -46,7 +46,7 @@ services:
     container_name: "simple-service"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.whoami.rule=Host(`whoami.chst.dev`)"
+      - "traefik.http.routers.whoami.rule=Path('/whoami')"
       - "traefik.http.routers.whoami.entrypoints=web"
 
   # portainer:
