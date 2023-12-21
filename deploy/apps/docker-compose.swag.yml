@@ -1,0 +1,38 @@
+version: "2.2"
+
+services:
+
+  swag:
+    image: "lscr.io/linuxserver/swag"
+    container_name: "swag"
+    cap_add:
+      - "NET_ADMIN"
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=${TIMEZONE}"
+      - "URL=chst.dev"
+      - "SUBDOMAINS=harpy,"
+      - "VALIDATION=http"
+      - "CERTPROVIDER=zerossl"
+      - "EMAIL=griffin@chst.dev"
+      - "DNSPLUGIN=cloudflare"
+      - "ONLY_SUBDOMAINS=true"
+      - "STAGING=false"
+    volumes:
+      - "$HOME/data/swag:/config"
+    ports:
+      - 443:443
+      - 80:80
+    restart: "unless-stopped"
+
+  # authelia:
+  #   container_name: "authelia"
+  #   image: "authelia/authelia"
+  #   expose:
+  #     - 9091
+  #   volumes:
+  #     - "${HOME}/data/authelia:/config"
+  #   environment:
+  #     - TZ: "${TIMEZONE}"
+  #   restart: "unless-stopped"
