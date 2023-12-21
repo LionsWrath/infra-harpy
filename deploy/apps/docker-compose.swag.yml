@@ -25,8 +25,6 @@ services:
       - 443:443
       - 80:80
     restart: "unless-stopped"
-    networks:
-      - base_network
 
   # authelia:
   #   container_name: "authelia"
@@ -40,5 +38,6 @@ services:
   #   restart: "unless-stopped"
 
 networks:
-  base-network:
-    name: lsio
+  default:
+    external:
+      name: lsio
