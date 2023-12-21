@@ -25,6 +25,8 @@ services:
       - 443:443
       - 80:80
     restart: "unless-stopped"
+    networks:
+      - base_network
 
   # authelia:
   #   container_name: "authelia"
@@ -36,3 +38,7 @@ services:
   #   environment:
   #     - TZ: "${TIMEZONE}"
   #   restart: "unless-stopped"
+
+networks:
+  base-network:
+    name: lsio
