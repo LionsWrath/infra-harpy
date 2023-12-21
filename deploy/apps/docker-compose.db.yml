@@ -12,12 +12,16 @@ services:
       - ../envs/db.env
       - ../envs/base.env
 
-  adminer:
-    image: "adminer"
-    container_name: "adminer"
+  pgadmin:
+    image: "dpage/pgadmin4"
+    container_name: "pgadmin"
     ports:
-      - 8080:8080
-    restart: always
+      - "16543:80"
+    depends_on:
+      - postgres
+    env_file:
+      ../envs/db.env
+
 
 networks:
   default:
