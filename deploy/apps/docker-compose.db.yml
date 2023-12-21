@@ -1,0 +1,27 @@
+version: '3.1'
+
+services:
+
+  postgres:
+    image: "postgres"
+    container_name: "postgres"
+    environment:
+      - "POSTGRES_PASSWORD=${DB_PWD}"
+    volumes:
+      - "${DATA_PATH}/db:/var/lib/postgresql/data"
+    restart: always
+    env_file:
+      - ../envs/db.env
+      - ../envs/base.env
+
+  adminer:
+    image: "adminer"
+    container_name: "adminer"
+    ports:
+      - 8080:8080
+    restart: always
+
+networks:
+  default:
+    name: lsio
+    external: true

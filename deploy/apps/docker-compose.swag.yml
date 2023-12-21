@@ -10,9 +10,9 @@ services:
     environment:
       - "PUID=1000"
       - "PGID=1000"
-      - "TZ=America/Sao_Paulo"
+      - "TZ=${TIMEZONE}"
       - "URL=chst.dev"
-      - "SUBDOMAINS=harpy,"
+      - "SUBDOMAINS=www,"
       - "VALIDATION=http"
       - "CERTPROVIDER=zerossl"
       - "EMAIL=griffin@chst.dev"
@@ -20,11 +20,13 @@ services:
       - "ONLY_SUBDOMAINS=true"
       - "STAGING=false"
     volumes:
-      - "/home/hichi/data/swag:/config"
+      - "${DATA_PATH}/swag:/config"
     ports:
       - 443:443
       - 80:80
     restart: "unless-stopped"
+    env_file:
+      - ../envs/base.env
 
   # authelia:
   #   container_name: "authelia"
