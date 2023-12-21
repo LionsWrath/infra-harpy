@@ -10,7 +10,7 @@ services:
     environment:
       - "PUID=1000"
       - "PGID=1000"
-      - "TZ=${TIMEZONE}"
+      - "TZ=America/Sao_Paulo"
       - "URL=chst.dev"
       - "SUBDOMAINS=harpy,"
       - "VALIDATION=http"
@@ -20,7 +20,7 @@ services:
       - "ONLY_SUBDOMAINS=true"
       - "STAGING=false"
     volumes:
-      - "$HOME/data/swag:/config"
+      - "/home/hichi/data/swag:/config"
     ports:
       - 443:443
       - 80:80
@@ -32,12 +32,12 @@ services:
   #   expose:
   #     - 9091
   #   volumes:
-  #     - "${HOME}/data/authelia:/config"
+  #     - "/home/hichi/data/authelia:/config"
   #   environment:
-  #     - TZ: "${TIMEZONE}"
+  #     - "TZ=America/Sao_Paulo"
   #   restart: "unless-stopped"
 
 networks:
   default:
-    external:
-      name: lsio
+    name: lsio
+    external: true
