@@ -1,1 +1,1 @@
-DATA_PATH=${HOME}/data
+export DATA_PATH=${HOME}/data
