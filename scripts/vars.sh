@@ -1,2 +1,0 @@
-TIMEZONE=America/Sao_Paulo
-DATA_CONFIG_PATH=$HOME/data

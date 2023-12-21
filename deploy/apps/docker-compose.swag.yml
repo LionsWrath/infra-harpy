@@ -10,7 +10,6 @@ services:
     environment:
       - "PUID=1000"
       - "PGID=1000"
-      - "TZ=${TIMEZONE}"
       - "URL=chst.dev"
       - "SUBDOMAINS=www,"
       - "VALIDATION=http"
