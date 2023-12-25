@@ -11,7 +11,7 @@ services:
       - "PUID=1000"
       - "PGID=1000"
       - "URL=chst.dev"
-      - "SUBDOMAINS=harpy,"
+      - "SUBDOMAINS=home,authelia,"
       - "VALIDATION=http"
       - "CERTPROVIDER=zerossl"
       - "EMAIL=griffin@chst.dev"
