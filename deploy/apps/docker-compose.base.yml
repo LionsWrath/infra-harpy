@@ -2,7 +2,7 @@ version: "2.2"
 
 services:
 
-  swag:
+  app:
     image: "jc21/nginx-proxy-manager:latest"
     container_name: "nginx-proxy-manager"
     volumes:
