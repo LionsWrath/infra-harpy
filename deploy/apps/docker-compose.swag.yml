@@ -3,24 +3,11 @@ version: "2.2"
 services:
 
   swag:
-    image: "lscr.io/linuxserver/swag"
-    container_name: "swag"
-    cap_add:
-      - "NET_ADMIN"
-    environment:
-      - "PUID=1000"
-      - "PGID=1000"
-      - "URL=chst.dev"
-      - "SUBDOMAINS=home,authelia,"
-      - "VALIDATION=http"
-      - "CERTPROVIDER=zerossl"
-      - "EMAIL=griffin@chst.dev"
-      - "DNSPLUGIN=cloudflare"
-      - "ONLY_SUBDOMAINS=true"
-      - "STAGING=false"
+    image: "jc21/nginx-proxy-manager:latest"
+    container_name: "nginx-proxy-manager"
     volumes:
-      - "${DATA_PATH}/swag:/config"
-      - "${DATA_PATH}/swag/snippets:/snippets:ro"
+      - "${DATA_PATH}/nginx-proxy-manager:/data"
+      - "${DATA_PATH}/letsencrypt:/etc/letsencrypt"
     ports:
       - 443:443
       - 80:80
