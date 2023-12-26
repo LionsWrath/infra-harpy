@@ -6,8 +6,8 @@ services:
     image: "jc21/nginx-proxy-manager:latest"
     container_name: "nginx-proxy-manager"
     environment:
-      - PUID: 1000
-      - PGID: 1000
+      - "PUID=1000"
+      - "PGID=1000"
     volumes:
       - "${DATA_PATH}/nginx-proxy-manager:/data"
       - "${DATA_PATH}/letsencrypt:/etc/letsencrypt"
