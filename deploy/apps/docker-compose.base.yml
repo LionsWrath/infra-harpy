@@ -5,22 +5,26 @@ services:
   app:
     image: "jc21/nginx-proxy-manager:latest"
     container_name: "nginx-proxy-manager"
+    environment:
+      - PUID: 1000
+      - PGID: 1000
     volumes:
       - "${DATA_PATH}/nginx-proxy-manager:/data"
       - "${DATA_PATH}/letsencrypt:/etc/letsencrypt"
     ports:
       - 443:443
       - 80:80
+      # Admin Dashboard
       - 81:81
     restart: "unless-stopped"
     env_file:
       - ../envs/base.env
 
   authelia:
-    container_name: "authelia"
     image: "authelia/authelia"
-    expose:
-      - 9091
+    container_name: "authelia"
+    ports:
+      - 9091:9091
     volumes:
       - "${DATA_PATH}/authelia:/config"
     restart: "unless-stopped"
