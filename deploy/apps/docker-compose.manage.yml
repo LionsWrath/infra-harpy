@@ -18,15 +18,15 @@ services:
     env_file:
       - ../envs/base.env
 
-  # pgadmin:
-  #   image: "dpage/pgadmin4"
-  #   container_name: "pgadmin"
-  #   ports:
-  #     - "16543:80"
-  #   depends_on:
-  #     - postgres
-  #   env_file:
-  #     ../envs/db.env
+  pgadmin:
+    image: "dpage/pgadmin4"
+    container_name: "pgadmin"
+    ports:
+      - "16543:80"
+    depends_on:
+      - postgres
+    env_file:
+      ../envs/db.env
 
 networks:
   default:
