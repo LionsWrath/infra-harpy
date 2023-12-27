@@ -3,7 +3,7 @@ version: "2.2"
 services:
 
   portainer:
-    image: "portainer/portainer-ce:2.0.0"
+    image: "portainer/portainer-ce:latest"
     container_name: "portainer"
     command: "-H unix:///var/run/docker.sock"
     environment:
