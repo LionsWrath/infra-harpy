@@ -16,7 +16,7 @@ services:
       - 443:443
       - 80:80
       # Admin Dashboard
-      - 81:81
+      # - 81:81
     restart: "unless-stopped"
     env_file:
       - ../envs/base.env
@@ -24,8 +24,6 @@ services:
   authelia:
     image: "authelia/authelia"
     container_name: "authelia"
-    ports:
-      - 9091:9091
     volumes:
       - "${DATA_PATH}/authelia:/config"
     restart: "unless-stopped"
@@ -38,8 +36,6 @@ services:
     environment:
       - "PUID=1000"
       - "PGID=1000"
-    ports:
-      - 3000:3000
     volumes:
       - "${DATA_PATH}/homepage:/app/config"
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
