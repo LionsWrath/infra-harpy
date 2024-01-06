@@ -15,8 +15,6 @@ services:
     ports:
       - 443:443
       - 80:80
-      # Admin Dashboard
-      # - 81:81
     restart: "unless-stopped"
     env_file:
       - ../envs/base.env
