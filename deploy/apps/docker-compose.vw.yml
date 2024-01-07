@@ -1,0 +1,16 @@
+version: "3"
+
+services:
+  vaultwarden:
+    image: vaultwarden/server:latest
+    container_name: vaultwarden
+    restart: always
+    environment:
+      DOMAIN: "https://vw.chst.dev" 
+    volumes:
+      - "${DATA_PATH}/vaultwarden:/data"
+
+networks:
+  default:
+    name: lsio
+    external: true
