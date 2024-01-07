@@ -9,6 +9,8 @@ services:
       DOMAIN: "https://vw.chst.dev" 
     volumes:
       - "${DATA_PATH}/vaultwarden:/data"
+    env_file:
+      ../envs/db.env
 
 networks:
   default:
