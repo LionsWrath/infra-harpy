@@ -22,6 +22,8 @@ services:
   authelia:
     image: "authelia/authelia"
     container_name: "authelia"
+    depends_on:
+      - app
     volumes:
       - "${DATA_PATH}/authelia:/config"
     restart: "unless-stopped"
@@ -31,6 +33,9 @@ services:
   homepage:
     image: "ghcr.io/gethomepage/homepage:latest"
     container_name: "homepage"
+    depends_on:
+      - app
+      - authelia
     environment:
       - "PUID=1000"
       - "PGID=1000"

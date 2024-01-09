@@ -22,6 +22,8 @@ services:
   radarr:
     image: lscr.io/linuxserver/radarr:latest
     container_name: radarr
+    depends_on:
+      - qbittorrent
     environment:
       - PUID=1000
       - PGID=1000
@@ -33,3 +35,7 @@ services:
     env_file:
       - ../envs/base.env
 
+networks:
+  default:
+    name: lsio
+    external: true
