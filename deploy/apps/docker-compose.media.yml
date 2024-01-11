@@ -14,7 +14,7 @@ services:
     volumes:
       - "${DATA_PATH}/qbittorrent:/config"
       - "${DATA_PATH}/files/downloads:/downloads"
-    networks_mode: service:wireguard
+    network_mode: service:wireguard
     restart: unless-stopped
     env_file:
       - ../envs/base.env
