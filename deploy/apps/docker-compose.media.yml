@@ -17,6 +17,8 @@ services:
     networks:
       wgnet:
         ipv4_address: 172.16.0.3
+    ports:
+      - 8080:8080
     restart: unless-stopped
     env_file:
       - ../envs/base.env
@@ -37,10 +39,7 @@ services:
       wgnet:
         ipv4_address: 172.16.0.2
     ports:
-      # wireguard
       - 51820:51820/udp
-      # qbittorrent
-      - 8080:8080
     sysctls:
       - net.ipv4.conf.all.src_valid_mark=1
       # Solves problem with RTNETLINK
