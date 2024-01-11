@@ -32,7 +32,8 @@ services:
       - "${DATA_PATH}/wireguard:/config"
       - "/lib/modules:/lib/modules"
     networks:
-      - wgnet
+      wgnet:
+        ipv4_address: 172.18.0.2
     ports:
       # wireguard
       - 51820:51820/udp
