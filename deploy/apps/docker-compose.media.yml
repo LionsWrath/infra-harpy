@@ -37,7 +37,7 @@ services:
       - "/lib/modules:/lib/modules"
     networks:
       wgnet:
-        ipv4_address: 172.16.0.2
+        ipv4_address: 172.16.0.50
     ports:
       - 51820:51820/udp
     sysctls:
