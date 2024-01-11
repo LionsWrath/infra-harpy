@@ -100,8 +100,6 @@ services:
     volumes:
       - "${DATA_PATH}/jackett:/config"
       - "${DATA_PATH}/files/blackhole:/downloads"
-    ports:
-      - 9117:9117
     restart: unless-stopped
     env_file:
       - ../envs/base.env
