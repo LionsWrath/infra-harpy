@@ -16,7 +16,7 @@ services:
       - "${DATA_PATH}/files/downloads:/downloads"
     networks:
       wgnet:
-        ipv4_address: 172.18.0.3
+        ipv4_address: 172.16.0.3
     restart: unless-stopped
     env_file:
       - ../envs/base.env
@@ -35,7 +35,7 @@ services:
       - "/lib/modules:/lib/modules"
     networks:
       wgnet:
-        ipv4_address: 172.18.0.2
+        ipv4_address: 172.16.0.2
     ports:
       # wireguard
       - 51820:51820/udp
