@@ -34,10 +34,9 @@ services:
       - PGID=1000
     volumes:
       - "${DATA_PATH}/wireguard:/config"
-      - "/lib/modules:/lib/modules"
     networks:
       wgnet:
-        ipv4_address: 172.16.0.50
+        ipv4_address: 172.16.0.2
     ports:
       - 51820:51820/udp
     sysctls:
