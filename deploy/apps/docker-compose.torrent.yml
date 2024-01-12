@@ -14,11 +14,7 @@ services:
     volumes:
       - "${DATA_PATH}/qbittorrent:/config"
       - "${DATA_PATH}/files/downloads:/downloads"
-    networks:
-      wgnet:
-        ipv4_address: 172.16.0.3
-    ports:
-      - 8080:8080
+    network_mode: service:wireguard
     restart: unless-stopped
     env_file:
       - ../envs/base.env
@@ -37,9 +33,10 @@ services:
       - "/lib/modules:/lib/modules"
     networks:
       wgnet:
-        ipv4_address: 172.16.0.2
+        ipv4_address: 172.16.0.50
     ports:
       - 51820:51820/udp
+      - 8080:8080
     sysctls:
       - net.ipv4.conf.all.src_valid_mark=1
       # Solves problem with RTNETLINK
