@@ -44,8 +44,3 @@ services:
     restart: unless-stopped
     env_file:
       - ../envs/base.env
-
-networks:
-  wgnet:
-    name: wgnet
-    external: true
