@@ -13,6 +13,7 @@ services:
       - WEBUI_PORT=8080
     volumes:
       - "${DATA_PATH}/qbittorrent:/config"
+      - "${DATA_PATH}/qbittorrent/resolv.conf:/etc/resolv.conf"
       - "${DATA_PATH}/files/downloads:/downloads"
     networks:
       wgnet:
