@@ -17,6 +17,21 @@ services:
     env_file:
       - ../envs/base.env
 
+  cloudflared:
+    container_name: cloudflared
+    image: cloudflare/cloudflared:latest
+    restart: unless-stopped
+    command: proxy-dns
+    # See the list of environment variables at https://github.com/cloudflare/cloudflared/blob/master/cmd/cloudflared/proxydns/cmd.go
+    environment:
+      TUNNEL_DNS_UPSTREAM: "https://1.0.0.1/dns-query,https://1.1.1.1/dns-query"
+      # Listen on an unprivileged port
+      TUNNEL_DNS_PORT: 5053
+      # Listen on all interfaces
+      TUNNEL_DNS_ADDRESS: "0.0.0.0"
+    env_file:
+      - ../envs/base.env
+
 networks:
   default:
     name: lsio
