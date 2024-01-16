@@ -17,7 +17,7 @@ services:
       - PGID=1000
       - MAX_WORKERS=1
       - WEB_CONCURRENCY=1
-      - BASE_URL=https://mealie.chst.dev
+      - BASE_URL=http://mealie.chst.dev
     restart: always
     env_file:
       - ../envs/base.env
