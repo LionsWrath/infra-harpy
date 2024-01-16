@@ -18,7 +18,7 @@ services:
     depends_on:
       - postgres
     env_file:
-      ../envs/db.env
+      ../envs/db_pgadmin.env
 
 networks:
   default:

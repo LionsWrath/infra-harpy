@@ -10,7 +10,7 @@ services:
     volumes:
       - "${DATA_PATH}/vaultwarden:/data"
     env_file:
-      ../envs/db.env
+      ../envs/db_vaultwarden.env
 
 networks:
   default:
