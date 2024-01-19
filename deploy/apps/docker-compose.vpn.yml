@@ -15,7 +15,7 @@ services:
       - "${DATA_PATH}/wireguard:/config"
       - "/lib/modules:/lib/modules"
     networks:
-      lsio:
+      default:
         ipv4_address: 172.20.0.50
     sysctls:
       - net.ipv4.conf.all.src_valid_mark=1
