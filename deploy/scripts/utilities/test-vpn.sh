@@ -1,0 +1,1 @@
+docker exec $1 curl -s https://am.i.mullvad.net/connected

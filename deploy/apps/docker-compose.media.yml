@@ -14,14 +14,13 @@ services:
     volumes:
       - "${DATA_PATH}/qbittorrent:/config"
       - "${DATA_PATH}/files/downloads:/downloads"
-      - "${SOURCE_PATH}/scripts/routes/qbittorrent.sh:/scripts/route.sh"
+      - "${SOURCE_PATH}/scripts/internal/secure.sh:/scripts/secure.sh"
     ports:
       - 6881:6881
       - 6881:6881/udp
     restart: unless-stopped
     env_file:
       - ../envs/base.env
-    command: sh -c "/scripts/route.sh"
 
   sonarr:
     image: lscr.io/linuxserver/sonarr:latest
