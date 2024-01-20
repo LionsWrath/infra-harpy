@@ -5,8 +5,6 @@ services:
   qbittorrent:
     image: lscr.io/linuxserver/qbittorrent:latest
     container_name: qbittorrent
-    cap_add:
-      - NET_ADMIN
     environment:
       - PUID=1000
       - PGID=1000
@@ -14,17 +12,18 @@ services:
     volumes:
       - "${DATA_PATH}/qbittorrent:/config"
       - "${DATA_PATH}/files/downloads:/downloads"
-      - "${SOURCE_PATH}/scripts/internal/secure.sh:/scripts/secure.sh"
     ports:
       - 6881:6881
       - 6881:6881/udp
-    restart: unless-stopped
+    restart: no
     env_file:
       - ../envs/base.env
 
   sonarr:
     image: lscr.io/linuxserver/sonarr:latest
     container_name: sonarr
+    depends_on:
+      - qbittorrent
     environment:
       - PUID=1000
       - PGID=1000
@@ -32,7 +31,7 @@ services:
       - ${DATA_PATH}/data:/config
       - ${DATA_PATH}/files/tv:/tv
       - ${DATA_PATH}/files/downloads:/downloads
-    restart: unless-stopped
+    restart: no
     env_file:
       - ../envs/base.env
 
@@ -48,13 +47,15 @@ services:
       - "${DATA_PATH}/radarr:/config"
       - "${DATA_PATH}/files/movies:/movies"
       - "${DATA_PATH}/files/downloads:/downloads"
-    restart: unless-stopped
+    restart: no
     env_file:
       - ../envs/base.env
 
   bazarr:
     image: lscr.io/linuxserver/bazarr:latest
     container_name: bazarr
+    depends_on:
+      - qbittorrent
     environment:
       - PUID=1000
       - PGID=1000
@@ -62,13 +63,15 @@ services:
       - "${DATA_PATH}/bazarr:/config"
       - "${DATA_PATH}/files/movies:/movies"
       - "${DATA_PATH}/files/tv:/tv"
-    restart: unless-stopped
+    restart: no
     env_file:
       - ../envs/base.env
 
   jackett:
     image: lscr.io/linuxserver/jackett:latest
     container_name: jackett
+    depends_on:
+      - qbittorrent
     environment:
       - PUID=1000
       - PGID=1000
@@ -76,7 +79,7 @@ services:
     volumes:
       - "${DATA_PATH}/jackett:/config"
       - "${DATA_PATH}/files/blackhole:/downloads"
-    restart: unless-stopped
+    restart: no
     env_file:
       - ../envs/base.env
 
