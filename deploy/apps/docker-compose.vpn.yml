@@ -19,8 +19,6 @@ services:
         ipv4_address: 172.19.0.50
     sysctls:
       - net.ipv4.conf.all.src_valid_mark=1
-      # Solves problem with RTNETLINK
-      - net.ipv6.conf.all.disable_ipv6=0
     restart: unless-stopped
     env_file:
       - ../envs/base.env
