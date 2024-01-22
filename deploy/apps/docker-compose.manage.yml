@@ -21,6 +21,9 @@ services:
     container_name: ntfy
     command:
       - serve
+    environment:
+      - NTFY_BASE_URL: https://ntfy.chst.dev
+      - NTFY_LISTEN_HTTP: 8088
     user: 1000:1000
     volumes:
       - ${DATA_PATH}/ntfy:/etc/ntfy
