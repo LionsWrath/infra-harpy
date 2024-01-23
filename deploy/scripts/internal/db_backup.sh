@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source ntfy.sh
+
 if [ "$( docker container inspect -f '{{.State.Running}}' postgres )" = "true" ]; then
     
     FILENAME=$(date +"%Y_%m_%d")_pg_bck.gz
