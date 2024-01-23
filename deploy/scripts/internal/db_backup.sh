@@ -1,6 +1,7 @@
 #!/bin/bash
 
-source ntfy.sh
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+source ${SCRIPT_DIR}/ntfy.sh
 
 if [ "$( docker container inspect -f '{{.State.Running}}' postgres )" = "true" ]; then
     
