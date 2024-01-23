@@ -17,9 +17,9 @@ source ${SCRIPT_DIR}/../vars.sh
 
 notify () {
     docker exec nginx-proxy-manager curl \
-        -H "Title: Test Notification" \
-        -H "Priority: $1" \
-        -H "Tags: $2" \
-        -d "$3" \
-        $4
+        -H "Title: $1" \
+        -H "Priority: $2" \
+        -H "Tags: $3" \
+        -d "$4" \
+        $5
 }
