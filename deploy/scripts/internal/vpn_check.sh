@@ -40,6 +40,7 @@ do
         fi
     else
         notify "$TITLE" "urgent" "rotating_light" "Container $i not running!" ${MANAGE_TOPIC}
+        COT+=('$i')
     fi
 done
 
