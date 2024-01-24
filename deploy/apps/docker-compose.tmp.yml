@@ -8,7 +8,7 @@ services:
     volumes:
       - "${DATA_PATH}/mssql/data:/var/opt/mssql/data"
       - "${DATA_PATH}/mssql/log:/var/opt/mssql/log"
-    port:
+    ports:
       - 1433:1433
     restart: no
     env_file:
