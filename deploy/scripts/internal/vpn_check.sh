@@ -7,9 +7,7 @@ source ${SCRIPT_DIR}/secured.sh
 TITLE="VPN Verification Process"
 
 if [ "$( docker container inspect -f '{{.State.Running}}' wireguard )" = "true" ]; then
-    CHECK=$(docker exec wireguard curl -s https://am.i.mullvad.net/connected)
-
-    if [[ $CHECK == *"You are not connected to Mullvad."* ]]; then
+    if [ "$( check_container_vpn wireguard )" = "true" ]; then
         notify "$TITLE" "high" "warning" "Base wg container not connected!" ${MANAGE_TOPIC}
         exit
     fi
@@ -26,9 +24,7 @@ COT=()
 for i in "${arr[@]}"
 do
     if [ "$( docker container inspect -f '{{.State.Running}}' $i )" = "true" ]; then
-        CHECK=$(docker exec $i curl -s https://am.i.mullvad.net/connected)
-
-        if [[ $CHECK == *"You are not connected to Mullvad."* ]]; then
+        if [ "$( check_container_vpn $i )" = "true" ]; then
             COT+=("$i")
         fi
     else
