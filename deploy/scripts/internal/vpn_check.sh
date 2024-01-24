@@ -12,8 +12,6 @@ declare -a arr=(
 )
 
 TITLE="VPN Verification Process"
-PATTERN="^You are connected to Mullvad \(server ([a-z0-9-]+)\). Your IP address is ([\d.]+)$"
-SERVER=""
 
 if [ "$( docker container inspect -f '{{.State.Running}}' wireguard )" = "true" ]; then
     CHECK=$(docker exec wireguard curl -s https://am.i.mullvad.net/connected)
@@ -21,10 +19,6 @@ if [ "$( docker container inspect -f '{{.State.Running}}' wireguard )" = "true" 
     if [[ $CHECK == *"You are not connected to Mullvad."* ]]; then
         notify "$TITLE" "high" "warning" "Base wg container not connected!" ${MANAGE_TOPIC}
         exit
-    else
-        if [[ "$CHECK" =~ $PATTERN ]]; then
-            notify "$TITLE" "default" "heavy_check_mark" "Server ${BASH_REMATCH[1]} (${BASH_REMATCH[2]})" ${MANAGE_TOPIC}
-        fi
     fi
 else
     notify "$TITLE" "urgent" "rotating_light" "Base wg container not running!" ${MANAGE_TOPIC}
