@@ -2,14 +2,7 @@
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 source ${SCRIPT_DIR}/ntfy.sh
-
-declare -a arr=(
-    "qbittorrent"
-    "sonarr"
-    "radarr"
-    "bazarr"
-    "jackett"
-)
+source ${SCRIPT_DIR}/secured.sh
 
 TITLE="VPN Verification Process"
 
