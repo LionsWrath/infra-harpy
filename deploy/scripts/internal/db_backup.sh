@@ -8,7 +8,7 @@ if [ "$( docker container inspect -f '{{.State.Running}}' postgres )" = "true" ]
     FILENAME=$(date +"%Y_%m_%d")_pg_bck.gz
     FILEPATH=${DATA_PATH}/backups/postgresql
 
-    if [ ! -f ${FILEPATH}/${FILENAME} ]; then
+    if [ -f ${FILEPATH}/${FILENAME} ]; then
         notify "DB Backup Process" "high" "warning" "File ${FILENAME} already exists. Exiting." ${MANAGE_TOPIC}
         exit
     fi
