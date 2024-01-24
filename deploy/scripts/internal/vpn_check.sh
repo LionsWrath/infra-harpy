@@ -36,11 +36,11 @@ do
         CHECK=$(docker exec $i curl -s https://am.i.mullvad.net/connected)
 
         if [[ $CHECK == *"You are not connected to Mullvad."* ]]; then
-            COT+=('$i')
+            COT+=("$i")
         fi
     else
         notify "$TITLE" "urgent" "rotating_light" "Container $i not running!" ${MANAGE_TOPIC}
-        COT+=('$i')
+        COT+=("$i")
     fi
 done
 
