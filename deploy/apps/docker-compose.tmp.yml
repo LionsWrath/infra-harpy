@@ -1,0 +1,21 @@
+version: '3.1'
+
+services:
+
+  mssql:
+    image: "mcr.microsoft.com/mssql/server:2022-latest"
+    container_name: "mssql"
+    volumes:
+      - "${DATA_PATH}/mssql/data:/var/opt/mssql/data"
+      - "${DATA_PATH}/mssql/log:/var/opt/mssql/log"
+    port:
+      - 1433:1433
+    restart: no
+    env_file:
+      - ../envs/db_tmp.env
+      - ../envs/base.env
+
+networks:
+  default:
+    name: lsio
+    external: true
