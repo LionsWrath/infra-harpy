@@ -10,6 +10,13 @@ check_container_vpn () {
     fi
 }
 
+stop_all_secured_containers () {
+    for i in "${arr[@]}"
+    do
+        docker stop $i
+    done
+}
+
 declare -a arr=(
     "qbittorrent"
     "sonarr"
