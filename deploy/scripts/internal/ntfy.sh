@@ -16,7 +16,7 @@ SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 source ${SCRIPT_DIR}/../vars.sh
 
 notify () {
-    docker exec nginx-proxy-manager curl \
+    docker exec nginx-proxy-manager curl -s \
         -H "Title: $1" \
         -H "Priority: $2" \
         -H "Tags: $3" \
