@@ -16,7 +16,7 @@ PATTERN="^You are connected to Mullvad \(server ([a-z0-9-]+)\). Your IP address 
 SERVER=""
 
 if [ "$( docker container inspect -f '{{.State.Running}}' wireguard )" = "true" ]; then
-    CHECK=$(docker exec $i curl -s https://am.i.mullvad.net/connected)
+    CHECK=$(docker exec wireguard curl -s https://am.i.mullvad.net/connected)
 
     if [[ $CHECK == *"You are not connected to Mullvad."* ]]; then
         notify "$TITLE" "high" "warning" "Base wg container not connected!" ${MANAGE_TOPIC}
