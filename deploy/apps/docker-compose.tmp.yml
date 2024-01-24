@@ -5,6 +5,7 @@ services:
   mssql:
     image: "mcr.microsoft.com/mssql/server:2022-latest"
     container_name: "mssql"
+    user: root
     volumes:
       - "${DATA_PATH}/mssql/data:/var/opt/mssql/data"
       - "${DATA_PATH}/mssql/log:/var/opt/mssql/log"
