@@ -1,3 +1,3 @@
 # Harpy Infrastructure
 
-Scripts and files for the Harpy server.
+Scripts and files for the new Harpy server.
