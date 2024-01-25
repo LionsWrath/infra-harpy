@@ -28,7 +28,7 @@ services:
       - PUID=1000
       - PGID=1000
     volumes:
-      - ${DATA_PATH}/data:/config
+      - ${DATA_PATH}/sonarr:/config
       - ${DATA_PATH}/files/tv:/tv
       - ${DATA_PATH}/files/downloads:/downloads
     restart: no
