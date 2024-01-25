@@ -23,5 +23,4 @@ declare -a arr=(
     "radarr"
     "bazarr"
     "jackett"
-    "flaresolverr"
 )

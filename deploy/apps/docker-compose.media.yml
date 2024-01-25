@@ -88,6 +88,7 @@ services:
     container_name: flaresolverr
     environment:
       - "LOG_LEVEL=info"
+    networks: container:jackett
     restart: no
     env_file:
       - ../envs/base.env
