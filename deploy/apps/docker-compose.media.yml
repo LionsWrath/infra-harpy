@@ -103,7 +103,7 @@ services:
       - "/dev/dri:/dev/dri"
     restart: unless-stopped
     env_file:
-      - ../ens/base.env
+      - ../envs/base.env
 
 networks:
   default:
