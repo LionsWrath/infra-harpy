@@ -83,6 +83,28 @@ services:
     env_file:
       - ../envs/base.env
 
+  #-------------------------------------------------
+
+  jellyfin:
+    image: lscr.io/linuxserver/jellyfin:latest
+    container_name: jellyfin
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - JELLYFIN_PublishedServerUrl=https://jellyfin.chst.dev
+    volumes:
+      - "${DATA_PATH}/jellyfin:/config"
+      - "${DATA_PATH}/files/tv:/data/tvshows"
+      - "${DATA_PATH}/files/movies:/data/movies"
+    ports:
+      - 7359:7359/udp
+      - 1900:1900/udp
+    devices:
+      - "/dev/dri:/dev/dri"
+    restart: unless-stopped
+    env_file:
+      - ../ens/base.env
+
 networks:
   default:
     name: lsio
