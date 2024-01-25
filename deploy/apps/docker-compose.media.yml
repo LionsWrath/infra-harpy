@@ -90,8 +90,7 @@ services:
       - jackett
     environment:
       - "LOG_LEVEL=info"
-    networks:
-      - container:jackett
+    network_mode: service:jackett
     restart: no
     env_file:
       - ../envs/base.env
