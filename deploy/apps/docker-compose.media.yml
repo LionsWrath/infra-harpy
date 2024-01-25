@@ -83,6 +83,15 @@ services:
     env_file:
       - ../envs/base.env
 
+  flaresolverr:
+    image: ghcr.io/flaresolverr/flaresolverr:latest 
+    container_name: flaresolverr
+    environment:
+      - "LOG_LEVEL=info"
+    restart: no
+    env_file:
+      - ../envs/base.env
+
   #-------------------------------------------------
 
   jellyfin:
