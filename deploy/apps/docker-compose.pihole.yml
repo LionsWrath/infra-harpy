@@ -27,6 +27,9 @@ services:
       - "TUNNEL_DNS_UPSTREAM=https://dns.mullvad.net/dns-query,https://dns.quad9.net/dns-query"
       - "TUNNEL_DNS_PORT=5053"
       - "TUNNEL_DNS_ADDRESS=0.0.0.0"
+    networks:
+      default:
+        ipv4_address: 172.19.0.60
     env_file:
       - ../envs/base.env
 
