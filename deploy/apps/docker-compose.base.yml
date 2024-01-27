@@ -12,6 +12,9 @@ services:
       - "${DATA_PATH}/nginx-proxy-manager:/data"
       - "${DATA_PATH}/letsencrypt:/etc/letsencrypt"
       - "${DATA_PATH}/nginx/snippets:/snippets:ro"
+    networks:
+      default:
+        ipv4_address: 172.19.0.5
     ports:
       - 443:443
       - 80:80
