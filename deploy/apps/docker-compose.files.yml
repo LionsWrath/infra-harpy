@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  sftpgo:
+    image: drakkan/sftpgo:alpine-slim
+    container_name: sftpgo
+    environment:
+      - "iSFTPGO_FTPD__BINDINGS__0__PORT=2121"
+    volumes:
+      - "{DATA_PATH}/sftpgo:/var/lib/sftpgo"
+      - "{DATA_PATH}/files:/srv/sftpgo/data"
+    ports:
+      - 2022:2022
+      - 50000-50100:50000-50100
+
+networks:
+  default:
+    name: lsio
+    external: true
