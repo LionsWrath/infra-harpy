@@ -5,10 +5,14 @@ services:
     image: drakkan/sftpgo:alpine-slim
     container_name: sftpgo
     environment:
-      - "iSFTPGO_FTPD__BINDINGS__0__PORT=2121"
+      - "SFTPGO_FTPD__BINDINGS__0__PORT=2121"
+      - "SFTPGO_FTPD__BINDINGS__0__FORCE_PASSIVE_IP=172.19.0.20"
     volumes:
       - "${DATA_PATH}/sftpgo:/var/lib/sftpgo"
       - "${DATA_PATH}/files:/srv/sftpgo/data"
+    networks:
+      default:
+        ipv4_address: 172.19.0.20
     ports:
       - 2022:2022
       - 50000-50100:50000-50100
