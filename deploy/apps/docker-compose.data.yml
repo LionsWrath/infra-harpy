@@ -2,13 +2,28 @@ version: '3.8'
 
 services:
 
-  grafana:
-    image: grafana/grafana-oss
-    container_name: grafana
-    environment:
-      - "GF_SERVER_ROOT_URL=https://grafana.chst.dev"
-      - "GF_INSTALL_PLUGINS=grafana-clock-panel"
-    ports:
-      - '3000:3000'
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+    restart: unless-stopped
     volumes:
-      - "${DATA_PATH}/grafana:/var/lib/grafana"
+      - "${DATA_PATH}/prometheus:/etc/prometheus"
+    env_file:
+      - ../envs/base.env
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    restart: unless-stopped
+    volumes:
+      - "${DATA_PATH}/grafana:/etc/grafana/provisioning/datasources"
+    env_file:
+      - ../envs/base.env
+      - ../envs/grafana.env
+
+networks:
+  default:
+    name: lsio
+    external: true
