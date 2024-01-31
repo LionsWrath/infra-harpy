@@ -12,6 +12,8 @@ services:
       - "${DATA_PATH}/prometheus:/etc/prometheus"
     env_file:
       - ../envs/base.env
+    extra_hosts:
+      - "host.docker.internal=host-gateway"
 
   grafana:
     image: grafana/grafana
