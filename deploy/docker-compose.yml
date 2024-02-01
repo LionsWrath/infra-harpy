@@ -1,0 +1,14 @@
+# Change ordering and test later
+
+include:
+  - "/apps/docker-compose.base.yml"
+  - "/apps/docker-compose.data.yml"
+  - "/apps/docker-compose.db.yml"
+  - "/apps/docker-compose.files.yml"
+  - "/apps/docker-compose.manage.yml"
+  - "/apps/docker-compose.media.yml"
+  - "/apps/docker-compose.pihole.yml"
+  - "/apps/docker-compose.recipes.yml"
+  - "/apps/docker-compose.vpn.yml"
+  - "/apps/docker-compose.vw.yml"
+
