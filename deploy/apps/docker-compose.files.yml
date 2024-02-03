@@ -17,6 +17,7 @@ services:
       - 2121:2121
       - 2022:2022
       - 50000-50100:50000-50100
+    restart: always
     env_file:
       - ../envs/base.env
 

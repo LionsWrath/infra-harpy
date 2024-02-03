@@ -17,6 +17,7 @@ services:
     container_name: "pgadmin"
     depends_on:
       - postgres
+    restart: always
     env_file:
       ../envs/db_pgadmin.env
 
