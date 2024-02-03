@@ -10,6 +10,9 @@ services:
     environment:
       - PROXY_LOCATION=pihole
       - VIRTUAL_HOST=pihole.chst.dev
+    networks:
+      default:
+        ipv4_address: 172.19.0.80
     volumes:
       - "${DATA_PATH}/pihole/etc-pihole:/etc/pihole"
       - "${DATA_PATH}/pihole/etc-dnsmasq.d:/etc/dnsmasq.d"
