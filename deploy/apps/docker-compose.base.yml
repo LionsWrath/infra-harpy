@@ -14,7 +14,7 @@ services:
       - "${DATA_PATH}/nginx/snippets:/snippets:ro"
     networks:
       default:
-        ipv4_address: 172.19.0.5
+        ipv4_address: 172.19.0.70
     ports:
       - 443:443
       - 80:80
