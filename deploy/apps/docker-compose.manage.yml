@@ -38,6 +38,12 @@ services:
     env_file:
       - ../envs/base.env
 
+  watchtower:
+    image: containrrr/watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${DATA_PATH}/watchtower/config.json:/config.json
+
 networks:
   default:
     name: lsio
