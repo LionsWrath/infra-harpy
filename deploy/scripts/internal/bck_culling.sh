@@ -9,7 +9,7 @@ RETENTION_TIME=30
 arr1=$(ls -t ${BACKUP_PATH} | head -n $RETENTION_TIME)
 arr2=$(ls -t ${BACKUP_PATH})
 
-if (( ${#arr1[@]} == 0)); then
+if (( ${#arr1[@]} == ${#arr2[@]} )); then
     echo "No file to cull."
 else
     line=$(echo ${arr1[@]} ${arr2[@]} | tr ' ' '\n' | sort | uniq -u)
