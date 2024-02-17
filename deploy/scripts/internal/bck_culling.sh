@@ -18,7 +18,7 @@ else
 
     for i in "${res[@]}"
     do
-        echo ${BACKUP_PATH}/$i
+        rm ${BACKUP_PATH}/$i
     done
 
     notify "Backup Culling Process" "high" "warning" "Culling ${res[@]} files." ${MANAGE_TOPIC}   
