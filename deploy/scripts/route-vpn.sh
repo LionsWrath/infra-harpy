@@ -26,6 +26,8 @@ do
         docker exec --privileged $i ip route add default via 172.19.0.50
         docker exec --privileged $i ip route add 100.64.0.0/10 via 172.19.0.1
 
+        sleep 5
+
         docker exec $i curl -s https://am.i.mullvad.net/connected
     else
         echo "container not running!"
