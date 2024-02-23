@@ -12,6 +12,9 @@ services:
     volumes:
       - "${DATA_PATH}/qbittorrent:/config"
       - "${DATA_PATH}/files/downloads:/downloads"
+    networks:
+      default:
+        ipv4_address: 172.19.0.100
     ports:
       - 6881:6881
       - 6881:6881/udp
