@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+
+  gitea:
+    #Planned
+
+  homeassistant:
+    #Planned
+
+networks:
+  default:
+    name: lsio
+    external: true
