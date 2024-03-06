@@ -12,6 +12,8 @@
 #  rotating_light
 #  computer
 
+# Link: https://docs.ntfy.sh/publish/#tags-emojis
+
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 source ${SCRIPT_DIR}/../vars.sh
 
