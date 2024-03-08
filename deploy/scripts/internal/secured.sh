@@ -19,7 +19,7 @@ stop_all_secured_containers () {
 
 ###########################################################################
 # flaresolverr doesn't need to be added because it uses the same stack as
-# the jackett docker
+# the jackett docker (with service:jackett)
 ###########################################################################
 declare -a arr=(
     "qbittorrent"
