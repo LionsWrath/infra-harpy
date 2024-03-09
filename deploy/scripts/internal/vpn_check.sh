@@ -6,6 +6,9 @@ source ${SCRIPT_DIR}/secured.sh
 
 TITLE="VPN Verification Process"
 
+#---------------------------------------------------------------------------------------------
+# Is wireguard on?
+
 if [ "$( docker container inspect -f '{{.State.Running}}' wireguard )" = "true" ]; then
     if [ "$( check_container_vpn wireguard )" = "false" ]; then
         notify "$TITLE" "high" "warning" "Base wg container not connected! Emergency stop." ${MANAGE_TOPIC}
