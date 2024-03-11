@@ -8,6 +8,7 @@ TITLE="VPN Verification Process"
 
 #---------------------------------------------------------------------------------------------
 # Is wireguard on?
+# If not we stop all secured containers for safety
 
 if [ "$( docker container inspect -f '{{.State.Running}}' wireguard )" = "true" ]; then
     if [ "$( check_container_vpn wireguard )" = "false" ]; then
