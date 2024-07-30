@@ -15,7 +15,7 @@ services:
       - "DIUN_PROVIDERS_DOCKER=true"
       - "DIUN_NOTIF_NTFY_ENDPOINT=https://ntfy.chst.dev"
       - "DIUN_NOTIF_NTFY_TOPIC=manage"
-      - "DIUN_NOTIF_NTFY_TAGS=loadspeaker"
+      - "DIUN_NOTIF_NTFY_TAGS=loudspeaker"
       - "DIUN_NOTIF_NTFY_TIMEOUT=10s"
     labels:
       - "diun.enable=true"
