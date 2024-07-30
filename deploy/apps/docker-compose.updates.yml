@@ -15,6 +15,7 @@ services:
       - "DIUN_WATCH_JITTER=30s"
       - "DIUN_WATCH_RUNONSTARTUP=true"
       - "DIUN_PROVIDERS_DOCKER=true"
+      - "DIUN_PROVIDERS_DOCKER_WATCHBYDEFAULT=true"
       - "DIUN_NOTIF_NTFY_ENDPOINT=https://ntfy.chst.dev"
       - "DIUN_NOTIF_NTFY_TOPIC=manage"
       - "DIUN_NOTIF_NTFY_TAGS=loudspeaker"
