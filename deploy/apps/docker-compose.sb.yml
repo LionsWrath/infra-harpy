@@ -1,0 +1,27 @@
+version: "3"
+
+services:
+
+  #------------------------------------------------
+  # 3000 - Obsidian desktop gui
+  # 3001 - Obsidian desktop gui HTTPS
+  #------------------------------------------------
+  obsidian:
+    image: lscr.io/linuxserver/obsidian:latest
+    container_name: obsidian
+    #security_opt:
+    #  - seccomp:unconfined #optional
+    environment:
+      - PUID=1000
+      - PGID=1000
+    volumes:
+      - "${DATA_PATH}/obsidian:/config"
+    shm_size: "1gb"
+    restart: unless-stopped
+    env_file:
+      - ../envs/base.env
+
+networks:
+  default:
+    name: lsio
+    external: true
