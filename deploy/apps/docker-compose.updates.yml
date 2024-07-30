@@ -8,11 +8,12 @@ services:
     command: serve
     volumes:
       - "${DATA_PATH}/diun:/data"
-      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
     environment:
       - "DIUN_WATCH_WORKERS=5"
       - "DIUN_WATCH_SCHEDULE=0 */6 * * *"
       - "DIUN_WATCH_JITTER=30s"
+      - "DIUN_WATCH_RUNONSTARTUP=true"
       - "DIUN_PROVIDERS_DOCKER=true"
       - "DIUN_NOTIF_NTFY_ENDPOINT=https://ntfy.chst.dev"
       - "DIUN_NOTIF_NTFY_TOPIC=manage"
