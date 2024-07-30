@@ -9,8 +9,8 @@ services:
   obsidian:
     image: lscr.io/linuxserver/obsidian:latest
     container_name: obsidian
-    #security_opt:
-    #  - seccomp:unconfined #optional
+    security_opt:
+      - seccomp:unconfined
     environment:
       - PUID=1000
       - PGID=1000
