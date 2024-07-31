@@ -25,7 +25,6 @@ services:
     restart: always
     env_file:
       - ../envs/base.env
-      - ../envs/ntfy.env
 
 networks:
   default:
