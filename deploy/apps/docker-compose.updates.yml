@@ -16,7 +16,7 @@ services:
       - "DIUN_WATCH_RUNONSTARTUP=true"
       - "DIUN_PROVIDERS_DOCKER=true"
       - "DIUN_PROVIDERS_DOCKER_WATCHBYDEFAULT=true"
-      - "DIUN_NOTIF_NTFY_ENDPOINT=http://ntfy:8088"
+      - "DIUN_NOTIF_NTFY_ENDPOINT=${NTFY_INTERNAL_ADDRESS}"
       - "DIUN_NOTIF_NTFY_TOPIC=manage"
       - "DIUN_NOTIF_NTFY_TAGS=loudspeaker"
       - "DIUN_NOTIF_NTFY_TIMEOUT=10s"
@@ -25,6 +25,7 @@ services:
     restart: always
     env_file:
       - ../envs/base.env
+      - ../envs/ntfy.env
 
 networks:
   default:
