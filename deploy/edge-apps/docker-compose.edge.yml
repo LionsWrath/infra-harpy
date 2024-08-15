@@ -1,0 +1,68 @@
+---
+version: "3.7"
+services:
+
+  tailscale:
+    image: tailscale/tailscale:latest
+    hostname: tailscale
+    volumes:
+      - ${PWD}/tailscale/state:/var/lib/tailscale
+      - /dev/net/tun:/dev/net/tun
+    cap_add:
+      - net_admin
+      - sys_module
+    restart: unless-stopped
+    env_file:
+      - ../envs/base.env
+      - ../envs/tailscale.env
+
+  app:
+    image: "jc21/nginx-proxy-manager:latest"
+    container_name: "nginx-proxy-manager"
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+    volumes:
+      - "${DATA_PATH}/nginx-proxy-manager:/data"
+      - "${DATA_PATH}/letsencrypt:/etc/letsencrypt"
+      - "${DATA_PATH}/nginx/snippets:/snippets:ro"
+    ports:
+      - 443:443
+      - 80:80
+    restart: "unless-stopped"
+    env_file:
+      - ../envs/base.env
+    depends_on:
+      - tailscale
+    network_mode: service:tailscale
+
+  authelia:
+    image: "authelia/authelia"
+    container_name: "authelia"
+    volumes:
+      - "${DATA_PATH}/authelia:/config"
+    restart: "unless-stopped"
+    env_file:
+      - ../envs/base.env
+    depends_on:
+      - app
+      - tailscale
+    network_mode: service:tailscale
+
+  homepage:
+    image: "ghcr.io/gethomepage/homepage:latest"
+    container_name: "homepage"
+    depends_on:
+      - app
+      - authelia
+      - tailscale
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+    volumes:
+      - "${DATA_PATH}/homepage:/app/config"
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    restart: "unless-stopped"
+    env_file:
+      - ../envs/base.env
+    network_mode: service:tailscale
