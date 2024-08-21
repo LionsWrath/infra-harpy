@@ -2,6 +2,8 @@
 version: "3.7"
 services:
 
+  # Tailscale VPN Connection as base
+  # All other containers on this network uses this infra
   tailscale:
     image: tailscale/tailscale:latest
     hostname: tailscale
