@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+
+  paperless:
+    image: ghcr.io/paperless-ngx/paperless-ngx:latest
+    container_name: paperless
+    ports:
+      - "8000:8000"
+    volumes:
+      - "${DATA_PATH}/paperless:/usr/src/paperless/data"
+      - "${DATA_PATH}/paperless:/usr/src/paperless/media"
+      - "${DATA_PATH}/files/serviceuser/export:/usr/src/paperless/export"
+      - "${DATA_PATH}/files/serviceuser/consume:/usr/src/paperless/consume"
+    restart: unless-stopped
+    env_file:
+      - ../envs/base.env
+      - ../envs/db_paperless.env
+
+networks:
+  default:
+    name: lsio
+    external: true
