@@ -18,7 +18,7 @@ services:
     ports:
       - 443:443
       - 80:80
-      #- 81:81 # (Manager for Emergencies)
+        #- 81:81 # (Manager for Emergencies)
     restart: "unless-stopped"
     env_file:
       - ../envs/base.env
@@ -43,6 +43,7 @@ services:
     environment:
       - "PUID=1000"
       - "PGID=1000"
+      - "HOMEPAGE_ALLOWED_HOSTS=*"
     volumes:
       - "${DATA_PATH}/homepage:/app/config"
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
