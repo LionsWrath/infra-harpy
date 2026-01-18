@@ -1,14 +1,12 @@
-version: "3"
-
 services:
 
   mealie:
-    image: ghcr.io/mealie-recipes/mealie:v1.0.0-RC2
+    image: ghcr.io/mealie-recipes/mealie:latest
     container_name: mealie
     deploy:
       resources:
         limits:
-          memory: 1000M
+          memory: 500M
     volumes:
       - "${DATA_PATH}/mealie:/app/data/"
     environment:
@@ -19,7 +17,7 @@ services:
       - WEB_CONCURRENCY=1
       - BASE_URL=http://mealie.chst.dev
         #ports:
-        #- 9000:9000
+        #- 9001:9000
     restart: always
     env_file:
       - ../envs/base.env

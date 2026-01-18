@@ -7,8 +7,11 @@ services:
     restart: always
     environment:
       DOMAIN: "https://vw.chst.dev" 
+      SIGNUPS_ALLOWED: false
     volumes:
       - "${DATA_PATH}/vaultwarden:/data"
+    #ports:
+    #  - "8000:80"
     env_file:
       ../envs/db_vaultwarden.env
 

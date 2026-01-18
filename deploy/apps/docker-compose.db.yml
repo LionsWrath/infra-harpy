@@ -6,10 +6,10 @@ services:
     image: "postgres"
     container_name: "postgres"
     volumes:
-      - "${DATA_PATH}/db:/var/lib/postgresql/data"
+      - "${DATA_PATH}/db:/var/lib/postgresql"
     restart: always
     env_file:
-      - ../envs/db.env
+      - ../envs/db_pg.env
       - ../envs/base.env
 
   pgadmin:
@@ -18,6 +18,8 @@ services:
     depends_on:
       - postgres
     restart: always
+    #ports:
+    #  - "8181:80"
     env_file:
       ../envs/db_pgadmin.env
 
