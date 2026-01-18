@@ -1,5 +1,9 @@
-export DATA_PATH=${HOME}/data
-export SOURCE_PATH=${HOME}/terraform/deploy
+export DATA_PATH=${HOME}/data/services
+export SHARES_PATH=${HOME}/data/shares
+export SOURCE_PATH=${HOME}/infra-harpy/deploy
 export NTFY_INTERNAL_ADDRESS=ntfy:8088
 export MANAGE_TOPIC=${NTFY_INTERNAL_ADDRESS}/manage
-export S3_PATH=s3://harpy-dl
+export LSIO_IP=172.18.0
+export TELEGRAM_CHAT_ID=-1003486659631
+export TELEGRAM_BOT_NAME=orochi_ntfy_bot
+export TELEGRAM_BOT_KEY=8215334367:AAGmhU5FkKO4MJZx3t5ARtEO5hKwfPm3A_0

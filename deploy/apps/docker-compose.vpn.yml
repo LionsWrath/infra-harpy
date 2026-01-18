@@ -16,7 +16,7 @@ services:
       - "/lib/modules:/lib/modules"
     networks:
       default:
-        ipv4_address: 172.19.0.50
+        ipv4_address: "${LSIO_IP}.50"
     sysctls:
       - net.ipv4.conf.all.src_valid_mark=1
     restart: unless-stopped

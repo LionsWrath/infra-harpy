@@ -1,0 +1,25 @@
+services:
+
+  samba:
+    image: ghcr.io/servercontainers/samba:latest
+    container_name: samba
+    hostname: samba
+    cap_add:
+      - CAP_NET_ADMIN
+    environment:
+      SAMBA_GLOBAL_CONFIG_wins_SPACE_support: yes
+      SAMBA_VOLUME_CONFIG_home: "[Home]; path=/shares/home/%U; valid users = lionswrath, vanelika; guest ok = no; read only = no; writable = yes; browseable = yes"
+    volumes:
+      - "${SHARES_PATH}/home:/shares/home"
+    ports:
+      - 445:445
+      - 139:139
+    restart: unless-stopped
+    env_file:
+      - ../envs/base.env
+      - ../envs/db_smb.env
+
+networks:
+  default:
+    name: lsio
+    external: true

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-source ${SCRIPT_DIR}/ntfy.sh
+source ${SCRIPT_DIR}/telegram.sh
 
 if [ "$( docker container inspect -f '{{.State.Running}}' postgres )" = "true" ]; then
     
@@ -9,7 +9,7 @@ if [ "$( docker container inspect -f '{{.State.Running}}' postgres )" = "true" ]
     FILEPATH=${DATA_PATH}/backups/postgresql
 
     if [ -f ${FILEPATH}/${FILENAME} ]; then
-        notify "DB Backup Process" "high" "warning" "File ${FILENAME} already exists. Exiting." ${MANAGE_TOPIC}
+        notify "DB Backup Process" "high" "warning" "File ${FILENAME} already exists. Exiting." "infra"
         exit
     fi
 
@@ -18,9 +18,9 @@ if [ "$( docker container inspect -f '{{.State.Running}}' postgres )" = "true" ]
     if [ ! -f ${FILEPATH}/${FILENAME} ]; then
         notify "DB Backup Process" "high" "warning" "File ${FILENAME} not found! Backup failed." ${MANAGE_TOPIC}
     else
-        notify "DB Backup Process" "default" "heavy_check_mark" "Backup successful. File ${FILENAME} created." ${MANAGE_TOPIC}
+        notify "DB Backup Process" "default" "heavy_check_mark" "Backup successful. File ${FILENAME} created." "infra"
     fi
 
 else
-    notify "DB Backup Process" "urgent" "rotating_light" "Container postgres not running!" ${MANAGE_TOPIC}
+    notify "DB Backup Process" "high" "danger" "Container postgres not running!" ${MANAGE_TOPIC}
 fi

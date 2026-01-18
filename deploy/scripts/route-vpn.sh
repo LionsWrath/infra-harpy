@@ -23,8 +23,8 @@ do
         fi
 
         docker exec --privileged $i ip route del default
-        docker exec --privileged $i ip route add default via 172.19.0.50
-        docker exec --privileged $i ip route add 100.64.0.0/10 via 172.19.0.1
+        docker exec --privileged $i ip route add default via ${LSIO_IP}.50
+        docker exec --privileged $i ip route add 100.64.0.0/10 via ${LSIO_IP}.1
 
         sleep 5
 

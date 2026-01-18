@@ -14,11 +14,11 @@ services:
       - "${DATA_PATH}/nginx/snippets:/snippets:ro"
     networks:
       default:
-        ipv4_address: 172.19.0.70
+        ipv4_address: "${LSIO_IP}.70"
     ports:
       - 443:443
       - 80:80
-        #- 81:81 # (Manager for Emergencies)
+      #- 81:81 # (Manager for Emergencies)
     restart: "unless-stopped"
     env_file:
       - ../envs/base.env
@@ -46,7 +46,11 @@ services:
       - "HOMEPAGE_ALLOWED_HOSTS=*"
     volumes:
       - "${DATA_PATH}/homepage:/app/config"
+      - "${DATA_PATH}/icons:/app/public/icons"
+      - "${DATA_PATH}/images:/app/public/images"
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    #ports:
+    #  - 3000:3000
     restart: "unless-stopped"
     env_file:
       - ../envs/base.env

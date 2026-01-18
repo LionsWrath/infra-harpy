@@ -14,7 +14,7 @@ services:
       - "${DATA_PATH}/files/downloads:/downloads"
     networks:
       default:
-        ipv4_address: 172.19.0.100
+        ipv4_address: "${LSIO_IP}.100"
     ports:
       - 6881:6881
       - 6881:6881/udp
@@ -83,41 +83,6 @@ services:
       - "${DATA_PATH}/jackett:/config"
       - "${DATA_PATH}/files/blackhole:/downloads"
     restart: no
-    env_file:
-      - ../envs/base.env
-
-  flaresolverr:
-    image: ghcr.io/flaresolverr/flaresolverr:latest 
-    container_name: flaresolverr
-    depends_on:
-      - jackett
-    environment:
-      - "LOG_LEVEL=info"
-    network_mode: service:jackett
-    restart: no
-    env_file:
-      - ../envs/base.env
-
-  #-------------------------------------------------
-
-  jellyfin:
-    image: lscr.io/linuxserver/jellyfin:10.10.3
-    container_name: jellyfin
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - JELLYFIN_PublishedServerUrl=https://jellyfin.chst.dev
-    volumes:
-      - "${DATA_PATH}/jellyfin:/config"
-      - "${DATA_PATH}/files/tv:/data/tvshows"
-      - "${DATA_PATH}/files/movies:/data/movies"
-    ports:
-      - 7359:7359/udp
-      - 1900:1900/udp
-      - 8096:8096/tcp
-    devices:
-      - "/dev/dri:/dev/dri"
-    restart: unless-stopped
     env_file:
       - ../envs/base.env
 
