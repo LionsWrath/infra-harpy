@@ -2,13 +2,8 @@ services:
   curlbox:
     image: curlimages/curl:latest
     container_name: curlbox
-    command: ["sh", "-c", "sleep infinity"]
+    command: ["sleep", "infinity"]
     restart: unless-stopped
-    read_only: true
-    cap_drop:
-      - ALL
-    security_opt:
-      - no-new-privileges:true
     networks:
       - default
 
