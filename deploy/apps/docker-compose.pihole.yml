@@ -13,7 +13,7 @@ services:
       - VIRTUAL_HOST=pihole.chst.dev
     networks:
       default:
-        ipv4_address: 172.19.0.80
+        ipv4_address: "${LSIO_IP}.80"
     volumes:
       - "${DATA_PATH}/pihole/etc-pihole:/etc/pihole"
       - "${DATA_PATH}/pihole/etc-dnsmasq.d:/etc/dnsmasq.d"
@@ -33,7 +33,7 @@ services:
       - "TUNNEL_DNS_ADDRESS=0.0.0.0"
     networks:
       default:
-        ipv4_address: 172.19.0.60
+        ipv4_address: "${LSIO_IP}.60"
     env_file:
       - ../envs/base.env
 
