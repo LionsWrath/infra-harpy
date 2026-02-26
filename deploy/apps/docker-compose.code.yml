@@ -19,6 +19,7 @@ services:
       - "${DATA_PATH}/homepage:/config/workspace/homepage"
       - "${DATA_PATH}/nginx:/config/workspace/nginx"
       - "${SOURCE_PATH}:/config/workspace/infra"
+      - "${OPENCLAW_PATH}:/config/workspace/openclaw"
     networks:
       default:
         ipv4_address: "${LSIO_IP}.40"
