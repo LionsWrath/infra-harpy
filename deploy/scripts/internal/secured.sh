@@ -27,4 +27,5 @@ declare -a arr=(
     "radarr"
     "bazarr"
     "jackett"
+    "searxng"
 )
