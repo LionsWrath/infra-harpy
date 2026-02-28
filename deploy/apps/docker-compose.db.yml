@@ -12,6 +12,16 @@ services:
       - ../envs/db_pg.env
       - ../envs/base.env
 
+  redis:
+    image: "redis:7-alpine"
+    container_name: "redis"
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - "${DATA_PATH}/redis:/data"
+    restart: always
+    env_file:
+      - ../envs/base.env
+
   pgadmin:
     image: "dpage/pgadmin4"
     container_name: "pgadmin"
