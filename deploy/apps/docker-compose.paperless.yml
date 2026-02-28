@@ -5,8 +5,8 @@ services:
   paperless:
     image: ghcr.io/paperless-ngx/paperless-ngx:latest
     container_name: paperless
-    ports:
-      - "8000:8000"
+    expose:
+      - "8000"
     volumes:
       - "${DATA_PATH}/paperless:/usr/src/paperless/data"
       - "${DATA_PATH}/paperless:/usr/src/paperless/media"
