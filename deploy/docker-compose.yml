@@ -8,6 +8,7 @@ include:
   - "/apps/docker-compose.manage.yml"
   - "/apps/docker-compose.media.yml"
   - "/apps/docker-compose.pihole.yml"
+  - "/apps/docker-compose.paperless.yml"
   - "/apps/docker-compose.recipes.yml"
   - "/apps/docker-compose.vpn.yml"
   - "/apps/docker-compose.vw.yml"
