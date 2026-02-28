@@ -19,7 +19,7 @@ services:
     environment:
       - PAPERLESS_OCR_LANGUAGE=por+eng
       - PAPERLESS_OCR_LANGUAGES=por
-      - PAPERLESS_OCR_MODE=redo
+      - PAPERLESS_OCR_MODE=skip
       - PAPERLESS_OCR_CLEAN=clean
       - PAPERLESS_OCR_DESKEW=1
       - PAPERLESS_OCR_ROTATE_PAGES=1
