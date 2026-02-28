@@ -11,7 +11,7 @@ services:
       - "${DATA_PATH}/paperless:/usr/src/paperless/data"
       - "${DATA_PATH}/paperless:/usr/src/paperless/media"
       - "${DATA_PATH}/files/serviceuser/export:/usr/src/paperless/export"
-      - "${DATA_PATH}/files/serviceuser/consume:/usr/src/paperless/consume"
+      - "${SHARES_PATH}/home/lionswrath/docs-topic-upload:/usr/src/paperless/consume"
     restart: unless-stopped
     env_file:
       - ../envs/base.env
