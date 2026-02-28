@@ -16,6 +16,17 @@ services:
     env_file:
       - ../envs/base.env
       - ../envs/db_paperless.env
+    environment:
+      - PAPERLESS_OCR_LANGUAGE=por+eng
+      - PAPERLESS_OCR_LANGUAGES=por
+      - PAPERLESS_OCR_MODE=redo
+      - PAPERLESS_OCR_CLEAN=clean
+      - PAPERLESS_OCR_DESKEW=1
+      - PAPERLESS_OCR_ROTATE_PAGES=1
+      - PAPERLESS_OCR_DPI=300
+      - PAPERLESS_OCR_USER_ARGS={"invalidate_digital_signatures": true}
+      - PAPERLESS_TASK_WORKERS=1
+      - PAPERLESS_THREADS_PER_WORKER=1
 
 networks:
   default:
