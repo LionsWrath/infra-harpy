@@ -23,26 +23,55 @@ else
 fi
 
 #---------------------------------------------------------------------------------------------
-# Check other containers
+# Check other containers + try route recovery before stop
 
-COT=()
+restore_vpn_route () {
+    local c="$1"
+
+    docker exec --privileged "$c" ip route del default >/dev/null 2>&1 || true
+    docker exec --privileged "$c" ip route add default via ${LSIO_IP}.50 >/dev/null 2>&1 || true
+    docker exec --privileged "$c" ip route add 100.64.0.0/10 via ${LSIO_IP}.1 >/dev/null 2>&1 || true
+
+    sleep 4
+}
+
+RECOVERED=()
+STOPPED=()
+MISSING=()
 
 for i in "${arr[@]}"
 do
-    if [ "$( docker container inspect -f '{{.State.Running}}' $i )" = "true" ]; then
+    if [ "$( docker container inspect -f '{{.State.Running}}' $i 2>/dev/null )" = "true" ]; then
         if [ "$( check_container_vpn $i )" = "false" ]; then
-            COT+=("$i")
-            docker stop $i
+            restore_vpn_route "$i"
+
+            if [ "$( check_container_vpn $i )" = "true" ]; then
+                RECOVERED+=("$i")
+            else
+                STOPPED+=("$i")
+                docker stop "$i" >/dev/null 2>&1 || true
+            fi
         fi
     else
-        notify "$TITLE" "high" "danger" "Container $i not running!" "infra"
-        COT+=("$i")
+        MISSING+=("$i")
     fi
 done
 
-if (( ${#COT[@]} == 0 )); then
+if (( ${#MISSING[@]} > 0 )); then
+    MISS_LIST=$( IFS=$', '; echo "${MISSING[*]}" )
+    notify "$TITLE" "high" "danger" "Container(s) not running: ${MISS_LIST}" "infra"
+fi
+
+if (( ${#RECOVERED[@]} > 0 )); then
+    REC_LIST=$( IFS=$', '; echo "${RECOVERED[*]}" )
+    notify "$TITLE" "default" "ok" "Container(s) route restored and connected: ${REC_LIST}" "infra"
+fi
+
+if (( ${#STOPPED[@]} > 0 )); then
+    STOP_LIST=$( IFS=$', '; echo "${STOPPED[*]}" )
+    notify "$TITLE" "high" "warning" "Container(s) still not connected after route recovery: ${STOP_LIST}. Stopped." "infra"
+fi
+
+if (( ${#MISSING[@]} == 0 && ${#STOPPED[@]} == 0 && ${#RECOVERED[@]} == 0 )); then
     notify "$TITLE" "default" "ok" "All containers connected!" "infra"
-else
-    CONTAINERS=$( IFS=$', '; echo "${COT[*]}" )   
-    notify "$TITLE" "high" "warning" "Container(s) ${CONTAINERS} not connected! Stopped." "infra"
 fi
