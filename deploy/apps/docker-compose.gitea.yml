@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+
+  gitea:
+    image: gitea/gitea:1.23.6
+    container_name: gitea
+    hostname: gitea
+    environment:
+      - USER_UID=1000
+      - USER_GID=1000
+    restart: unless-stopped
+    volumes:
+      - "${DATA_PATH}/gitea:/data"
+    ports:
+      - "222:22"
+    expose:
+      - "3000"
+    env_file:
+      - ../envs/base.env
+      - ../envs/db_gitea.env
+
+networks:
+  default:
+    name: lsio
+    external: true
