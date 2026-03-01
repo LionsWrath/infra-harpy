@@ -17,6 +17,9 @@ services:
       - ../envs/base.env
       - ../envs/db_paperless.env
     environment:
+      - PAPERLESS_URL=https://paperless.orochi.chst.dev
+      - PAPERLESS_CSRF_TRUSTED_ORIGINS=https://paperless.orochi.chst.dev
+      - PAPERLESS_ALLOWED_HOSTS=paperless.orochi.chst.dev
       - PAPERLESS_OCR_LANGUAGE=por+eng
       - PAPERLESS_OCR_LANGUAGES=por
       - PAPERLESS_OCR_MODE=skip
