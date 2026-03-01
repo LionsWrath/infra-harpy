@@ -19,7 +19,7 @@ services:
     environment:
       - PAPERLESS_URL=https://paperless.orochi.chst.dev
       - PAPERLESS_CSRF_TRUSTED_ORIGINS=https://paperless.orochi.chst.dev
-      - PAPERLESS_ALLOWED_HOSTS=paperless.orochi.chst.dev
+      - PAPERLESS_ALLOWED_HOSTS=paperless.orochi.chst.dev,paperless,localhost,127.0.0.1
       - PAPERLESS_OCR_LANGUAGE=por+eng
       - PAPERLESS_OCR_LANGUAGES=por
       - PAPERLESS_OCR_MODE=skip
