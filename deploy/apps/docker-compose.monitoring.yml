@@ -1,0 +1,42 @@
+services:
+
+  uptime-kuma:
+    image: "louislam/uptime-kuma:1"
+    container_name: "uptime-kuma"
+    environment:
+      - "TZ=${TZ}"
+      - "VIRTUAL_HOST=uptime.${BASE_DOMAIN}"
+      - "VIRTUAL_PORT=3001"
+    volumes:
+      - "${DATA_PATH}/uptime-kuma:/app/data"
+    restart: "unless-stopped"
+    #ports:
+    #  - "3001:3001" # Debug
+    env_file:
+      - ../envs/base.env
+
+  scrutiny:
+    image: "ghcr.io/analogj/scrutiny:master-omnibus"
+    container_name: "scrutiny"
+    cap_add:
+      - SYS_RAWIO
+    environment:
+      - "TZ=${TZ}"
+      - "SCRUTINY_WEB_INFLUXDB_HOST=0.0.0.0"
+      - "VIRTUAL_HOST=scrutiny.${BASE_DOMAIN}"
+      - "VIRTUAL_PORT=8080"
+    volumes:
+      - "${DATA_PATH}/scrutiny/config:/opt/scrutiny/config"
+      - "${DATA_PATH}/scrutiny/influxdb:/opt/scrutiny/influxdb"
+      - "/run/udev:/run/udev:ro"
+      - "/dev:/dev"
+    restart: "unless-stopped"
+    #ports:
+    #  - "8080:8080" # Debug
+    env_file:
+      - ../envs/base.env
+
+networks:
+  default:
+    name: lsio
+    external: true

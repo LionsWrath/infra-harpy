@@ -7,6 +7,7 @@ include:
   - "/apps/docker-compose.files.yml"
   - "/apps/docker-compose.manage.yml"
   - "/apps/docker-compose.media.yml"
+  - "/apps/docker-compose.monitoring.yml"
   - "/apps/docker-compose.gitea.yml"
   - "/apps/docker-compose.pihole.yml"
   - "/apps/docker-compose.paperless.yml"
