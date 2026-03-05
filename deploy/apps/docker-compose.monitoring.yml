@@ -15,26 +15,7 @@ services:
     env_file:
       - ../envs/base.env
 
-  scrutiny:
-    image: "ghcr.io/analogj/scrutiny:master-omnibus"
-    container_name: "scrutiny"
-    cap_add:
-      - SYS_RAWIO
-    environment:
-      - "TZ=${TZ}"
-      - "SCRUTINY_WEB_INFLUXDB_HOST=0.0.0.0"
-      - "VIRTUAL_HOST=scrutiny.${BASE_DOMAIN}"
-      - "VIRTUAL_PORT=8080"
-    volumes:
-      - "${DATA_PATH}/scrutiny/config:/opt/scrutiny/config"
-      - "${DATA_PATH}/scrutiny/influxdb:/opt/scrutiny/influxdb"
-      - "/run/udev:/run/udev:ro"
-      - "/dev:/dev"
-    restart: "unless-stopped"
-    #ports:
-    #  - "8080:8080" # Debug
-    env_file:
-      - ../envs/base.env
+  # scrutiny removed: not useful in current virtualized storage setup
 
 networks:
   default:
