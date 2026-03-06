@@ -27,10 +27,21 @@ fi
 
 restore_vpn_route () {
     local c="$1"
+    local wg_ip gw_ip
 
-    docker exec --privileged "$c" ip route del default >/dev/null 2>&1 || true
-    docker exec --privileged "$c" ip route add default via ${LSIO_IP}.50 >/dev/null 2>&1 || true
-    docker exec --privileged "$c" ip route add 100.64.0.0/10 via ${LSIO_IP}.1 >/dev/null 2>&1 || true
+    wg_ip="$(docker inspect -f '{{with index .NetworkSettings.Networks "lsio"}}{{.IPAddress}}{{end}}' wireguard 2>/dev/null || true)"
+    [[ -z "$wg_ip" ]] && wg_ip="$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' wireguard 2>/dev/null || true)"
+    gw_ip="$(docker network inspect lsio --format '{{(index .IPAM.Config 0).Gateway}}' 2>/dev/null || true)"
+
+    if [[ -z "$wg_ip" || -z "$gw_ip" ]]; then
+        return 1
+    fi
+
+    docker exec --privileged "$c" sh -lc "
+      ip route del default 2>/dev/null || true
+      ip route replace default via ${wg_ip}
+      ip route replace 100.64.0.0/10 via ${gw_ip}
+    " >/dev/null 2>&1 || true
 
     sleep 4
 }
