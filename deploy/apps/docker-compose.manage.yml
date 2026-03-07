@@ -20,6 +20,9 @@ services:
     volumes:
       - "${DATA_PATH}/n8n:/home/node/.n8n"
     restart: "unless-stopped"
+    networks:
+      default:
+        ipv4_address: "${LSIO_IP}.85"
     env_file:
       - ../envs/base.env
 
