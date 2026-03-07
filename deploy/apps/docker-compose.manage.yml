@@ -2,6 +2,33 @@ version: "2.2"
 
 services:
 
+  openclaw-relay:
+    image: "python:3.12-alpine"
+    container_name: "openclaw-relay"
+    working_dir: "/app"
+    command: >
+      sh -lc "python /app/relay_server.py"
+    environment:
+      - "TZ=${TZ}"
+      - "RELAY_HOST=0.0.0.0"
+      - "RELAY_PORT=8088"
+      - "RELAY_API_KEY=${OPENCLAW_RELAY_API_KEY}"
+      - "RELAY_DRY_RUN=${OPENCLAW_RELAY_DRY_RUN}"
+      - "OPENCLAW_BASE_URL=${OPENCLAW_BASE_URL}"
+      - "OPENCLAW_HOOK_TOKEN=${OPENCLAW_HOOK_TOKEN}"
+      - "OPENCLAW_AGENT_ID=main"
+      - "OPENCLAW_SESSION_KEY=hook:openclaw-relay"
+      - "VIRTUAL_HOST=relay.orochi.chst.dev"
+      - "VIRTUAL_PORT=8088"
+    volumes:
+      - "${DATA_PATH}/openclaw-relay/app:/app:ro"
+    restart: "unless-stopped"
+    networks:
+      default:
+        ipv4_address: "${LSIO_IP}.86"
+    env_file:
+      - ../envs/base.env
+
   n8n:
     image: "n8nio/n8n:latest"
     container_name: "n8n"
