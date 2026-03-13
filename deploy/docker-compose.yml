@@ -6,6 +6,7 @@ include:
   - "/apps/docker-compose.db.yml"
   - "/apps/docker-compose.files.yml"
   - "/apps/docker-compose.manage.yml"
+  - "/apps/docker-compose.airflow.yml"
   - "/apps/docker-compose.media.yml"
   - "/apps/docker-compose.monitoring.yml"
   - "/apps/docker-compose.gitea.yml"
