@@ -44,7 +44,7 @@ END
 SQL
 ```
 
-## 3) Set env values in `deploy/envs/base.env`
+## 3) Set env values in `deploy/envs/airflow.env`
 
 ```ini
 AIRFLOW_DB_HOST=postgres
@@ -56,6 +56,12 @@ AIRFLOW_ADMIN_USER=admin
 AIRFLOW_ADMIN_EMAIL=admin@local
 AIRFLOW_ADMIN_PASSWORD=CHANGE_ME_ADMIN
 AIRFLOW_WEBSERVER_SECRET_KEY=CHANGE_ME_SECRET
+
+# Optional for raw_news_summary DAGs
+DUCKDB_API_BASE=http://home.orochi.chst.dev:8090
+DUCKDB_API_KEY=CHANGE_ME
+RELAY_URL=https://relay.orochi.chst.dev/relay
+RELAY_KEY=CHANGE_ME
 ```
 
 ## 4) Run Airflow initialization once
