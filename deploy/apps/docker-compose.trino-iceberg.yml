@@ -30,7 +30,7 @@ services:
       - "VIRTUAL_HOST=trino.orochi.chst.dev"
       - "VIRTUAL_PORT=8080"
     volumes:
-      - "${DATA_PATH}/trino/etc:/etc/trino"
+      - "${DATA_PATH}/trino/config.properties:/etc/trino/config.properties"
       - "${DATA_PATH}/trino/catalog:/etc/trino/catalog"
       - "/home/lionswrath/data/lake:/data/lake"
     restart: "unless-stopped"
