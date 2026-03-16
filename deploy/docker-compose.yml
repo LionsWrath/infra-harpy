@@ -8,6 +8,7 @@ include:
   - "/apps/docker-compose.manage.yml"
   - "/apps/docker-compose.airflow.yml"
   - "/apps/docker-compose.trino-iceberg.yml"
+  - "/apps/docker-compose.superset.yml"
   - "/apps/docker-compose.media.yml"
   - "/apps/docker-compose.monitoring.yml"
   - "/apps/docker-compose.gitea.yml"

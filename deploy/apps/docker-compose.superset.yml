@@ -1,0 +1,60 @@
+version: "2.2"
+
+services:
+
+  superset-init:
+    image: "apache/superset:latest"
+    container_name: "superset-init"
+    entrypoint: "/bin/bash"
+    command: >
+      -lc "
+      superset db upgrade &&
+      superset fab create-admin
+      --username ${SUPERSET_ADMIN_USER}
+      --firstname Admin
+      --lastname User
+      --email ${SUPERSET_ADMIN_EMAIL}
+      --password ${SUPERSET_ADMIN_PASSWORD} || true &&
+      superset init
+      "
+    environment:
+      - "TZ=${TZ}"
+      - "SUPERSET_SECRET_KEY=${SUPERSET_SECRET_KEY}"
+      - "SUPERSET_CONFIG_PATH=/app/pythonpath/superset_config.py"
+    volumes:
+      - "${DATA_PATH}/superset/home:/app/superset_home"
+      - "${DATA_PATH}/superset/config/superset_config.py:/app/pythonpath/superset_config.py"
+    restart: "no"
+    env_file:
+      - ../envs/base.env
+
+  superset:
+    image: "apache/superset:latest"
+    container_name: "superset"
+    depends_on:
+      - "superset-init"
+    command: >
+      /bin/sh -lc "
+      pip install --no-cache-dir trino &&
+      superset run -h 0.0.0.0 -p 8088
+      "
+    environment:
+      - "TZ=${TZ}"
+      - "SUPERSET_SECRET_KEY=${SUPERSET_SECRET_KEY}"
+      - "SUPERSET_CONFIG_PATH=/app/pythonpath/superset_config.py"
+      - "VIRTUAL_HOST=superset.orochi.chst.dev"
+      - "VIRTUAL_PORT=8088"
+    volumes:
+      - "${DATA_PATH}/superset/home:/app/superset_home"
+      - "${DATA_PATH}/superset/config/superset_config.py:/app/pythonpath/superset_config.py"
+    restart: "unless-stopped"
+    networks:
+      default:
+        ipv4_address: "${LSIO_IP}.89"
+    env_file:
+      - ../envs/base.env
+
+networks:
+  default:
+    name: lsio
+    external: true

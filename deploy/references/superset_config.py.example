@@ -1,0 +1,21 @@
+# Copy to: ${DATA_PATH}/superset/config/superset_config.py
+# Example path on oichi:
+# /home/lionswrath/data/services/superset/config/superset_config.py
+
+import os
+
+SECRET_KEY = os.getenv("SUPERSET_SECRET_KEY", "CHANGE_ME")
+
+# Reuse existing postgres service
+SQLALCHEMY_DATABASE_URI = (
+    "postgresql+psycopg2://{user}:{pwd}@{host}:{port}/{db}".format(
+        user=os.getenv("SUPERSET_DB_USER", "postgres"),
+        pwd=os.getenv("SUPERSET_DB_PASSWORD", "CHANGE_ME"),
+        host=os.getenv("SUPERSET_DB_HOST", "postgres"),
+        port=os.getenv("SUPERSET_DB_PORT", "5432"),
+        db=os.getenv("SUPERSET_DB_NAME", "superset"),
+    )
+)
+
+WTF_CSRF_ENABLED = True
+TALISMAN_ENABLED = False
