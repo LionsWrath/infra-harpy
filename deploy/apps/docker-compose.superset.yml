@@ -3,7 +3,7 @@ version: "2.2"
 services:
 
   superset-init:
-    image: "apache/superset:latest"
+    image: "apache/superset:4.0.2"
     container_name: "superset-init"
     entrypoint: "/bin/bash"
     command: >
@@ -29,7 +29,7 @@ services:
       - ../envs/base.env
 
   superset:
-    image: "apache/superset:latest"
+    image: "apache/superset:4.0.2"
     container_name: "superset"
     depends_on:
       - "superset-init"
