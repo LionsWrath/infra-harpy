@@ -1,0 +1,45 @@
+version: "2.2"
+
+services:
+
+  nessie:
+    image: "projectnessie/nessie:latest"
+    container_name: "nessie"
+    environment:
+      - "TZ=${TZ}"
+      - "QUARKUS_HTTP_PORT=19120"
+      - "NESSIE_VERSION_STORE_TYPE=IN_MEMORY"
+      - "VIRTUAL_HOST=nessie.orochi.chst.dev"
+      - "VIRTUAL_PORT=19120"
+    volumes:
+      - "${DATA_PATH}/nessie:/var/lib/nessie"
+    restart: "unless-stopped"
+    networks:
+      default:
+        ipv4_address: "${LSIO_IP}.87"
+    env_file:
+      - ../envs/base.env
+
+  trino:
+    image: "trinodb/trino:latest"
+    container_name: "trino"
+    depends_on:
+      - "nessie"
+    environment:
+      - "TZ=${TZ}"
+      - "VIRTUAL_HOST=trino.orochi.chst.dev"
+      - "VIRTUAL_PORT=8080"
+    volumes:
+      - "${DATA_PATH}/trino/catalog:/etc/trino/catalog"
+      - "/home/lionswrath/data/lake:/data/lake"
+    restart: "unless-stopped"
+    networks:
+      default:
+        ipv4_address: "${LSIO_IP}.88"
+    env_file:
+      - ../envs/base.env
+
+networks:
+  default:
+    name: lsio
+    external: true
