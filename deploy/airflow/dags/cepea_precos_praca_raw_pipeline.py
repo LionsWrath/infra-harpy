@@ -81,7 +81,7 @@ def _fetch_via_flaresolverr(url: str) -> str:
     return data["solution"]["response"]
 
 
-@dag(dag_id=DAG_ID, start_date=datetime(2026, 4, 1), schedule=None, catchup=False, tags=["raw", "agro", "soja", "milho", "cepea"])
+@dag(dag_id=DAG_ID, start_date=datetime(2026, 4, 1), schedule="20 8 * * 1-5", catchup=False, tags=["raw", "agro", "soja", "milho", "cepea"])
 def _pipeline():
 
     @task

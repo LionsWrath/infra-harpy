@@ -10,7 +10,7 @@ _Last updated: 2026-05-09 UTC_
 - **legacy-review**: older/redundant DAG kept for reference or migration safety
 
 ## Operational decisions - phase 2
-- Keep the three corrected price DAGs as **manual/triggered** for now:
+- Promote the corrected price DAGs to **prod-scheduled** after successful validation with final DQ:
   - `imea_precos_interior_raw_pipeline`
   - `cepea_precos_praca_raw_pipeline`
   - `estadual_precos_interior_raw_pipeline`
@@ -36,13 +36,13 @@ _Last updated: 2026-05-09 UTC_
 | `raw_mapeia_tolls_snapshot_pipeline` | `15 2 * * *` | no | active scheduled toll source |
 | `raw_rss_update_news` | `0 3 * * *` | no | active scheduled news refresh |
 | `dim_toll_plaza_unified_pipeline` | `20 3 * * *` | no | corrected and validated with final DQ |
+| `imea_precos_interior_raw_pipeline` | `0 8 * * 1-5` | no | corrected, validated, final DQ added; promoted to prod-scheduled |
+| `cepea_precos_praca_raw_pipeline` | `20 8 * * 1-5` | no | corrected, validated, final DQ added; promoted to prod-scheduled |
+| `estadual_precos_interior_raw_pipeline` | `0 9 * * 5` | no | corrected, validated, final DQ added; promoted to prod-scheduled |
 
 ### prod-manual
 | DAG | schedule | paused | notes |
 |---|---|---:|---|
-| `imea_precos_interior_raw_pipeline` | `None` | no | corrected, validated, final DQ added |
-| `cepea_precos_praca_raw_pipeline` | `None` | no | corrected, validated, final DQ added |
-| `estadual_precos_interior_raw_pipeline` | `None` | no | corrected, validated, final DQ added |
 | `dim_logistic_node_seed_pipeline` | `None` | no | utility/manual seed pipeline |
 | `curated_antt_tarifa_base_pipeline` | `None` | yes | useful curated step, but still paused pending promotion decision |
 
@@ -66,7 +66,6 @@ _Last updated: 2026-05-09 UTC_
 | `curated_conab_frete_latest_pipeline` | `None` | yes | table exists, but production role not yet confirmed |
 | `curated_diesel_price_latest_by_uf_pipeline` | `None` | yes | table exists, but production role not yet confirmed |
 | `curated_ibge_municipios_pipeline` | `None` | yes | older derived helper kept paused |
-| `anp_diesel_raw_pipeline` | `0 9 5 * *` | no | monthly ANP raw upstream; promoted to prod-scheduled |
 
 ## Naming target
 - Raw: `<source>_<entity>_raw_pipeline`

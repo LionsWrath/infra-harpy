@@ -52,7 +52,7 @@ def fetch_binary_with_fallback(url: str, out_file: Path):
     return hdr
 
 
-@dag(dag_id=DAG_ID, start_date=datetime(2026, 4, 1), schedule=None, catchup=False, tags=["raw", "agro", "deral", "parana"])
+@dag(dag_id=DAG_ID, start_date=datetime(2026, 4, 1), schedule="0 9 * * 5", catchup=False, tags=["raw", "agro", "deral", "parana"])
 def pipeline():
     @task
     def fetch_to_landing() -> dict:

@@ -36,7 +36,7 @@ def _to_date(value: str) -> str:
     raise RuntimeError(f"Unsupported date format: {value}")
 
 
-@dag(dag_id=DAG_ID, start_date=datetime(2026, 4, 1), schedule=None, catchup=False, tags=["raw", "agro", "soja", "milho", "imea"])
+@dag(dag_id=DAG_ID, start_date=datetime(2026, 4, 1), schedule="0 8 * * 1-5", catchup=False, tags=["raw", "agro", "soja", "milho", "imea"])
 def _pipeline():
 
     @task
