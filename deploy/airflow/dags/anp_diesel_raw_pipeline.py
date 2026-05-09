@@ -40,7 +40,7 @@ def _extract_year_month(url: str):
 @dag(
     dag_id="anp_diesel_raw_pipeline",
     start_date=datetime(2023, 1, 1),
-    schedule=None,
+    schedule="0 9 5 * *",
     catchup=False,
     tags=["anp", "combustiveis", "raw"],
 )
