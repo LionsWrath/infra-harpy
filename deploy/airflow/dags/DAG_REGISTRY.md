@@ -7,45 +7,65 @@ _Last updated: 2026-05-09 UTC_
 - **prod-manual**: active/on-demand DAG expected to be triggered manually or by orchestration
 - **backfill**: one-shot or historical replay DAG
 - **lab**: experimental pipeline, not yet stable production
-- **legacy-review**: older/redundant DAG kept until replacement decision
+- **legacy-review**: older/redundant DAG kept for reference or migration safety
+
+## Operational decisions - phase 2
+- Keep the three corrected price DAGs as **manual/triggered** for now:
+  - `imea_precos_interior_raw_pipeline`
+  - `cepea_precos_praca_raw_pipeline`
+  - `estadual_precos_interior_raw_pipeline`
+- Keep `dim_toll_plaza_unified_pipeline` as the active scheduled toll-plaza dimension DAG.
+- Keep `dim_toll_plaza_pipeline` paused as legacy because it was superseded by the unified pipeline.
+- Keep old/derived curated DAGs paused until their production role is explicitly confirmed.
+- Avoid changing DAG IDs during stabilization unless a migration plan is ready.
 
 ## Current classification
 
 ### prod-scheduled
-- `bcb_rates_fx_raw_pipeline`
-- `cbot_futures_raw_pipeline`
-- `cbot_contracts_raw_pipeline`
-- `comex_fertilizantes_raw_pipeline`
-- `conab_frete_raw_pipeline`
-- `ibge_ufs_regioes_raw_pipeline`
-- `ibge_municipios_raw_pipeline`
-- `sidra_lavouras_raw_pipeline`
-- `raw_mapeia_tolls_snapshot_pipeline`
-- `raw_rss_update_news`
-- `dim_toll_plaza_unified_pipeline`
+| DAG | schedule | paused | notes |
+|---|---|---:|---|
+| `bcb_rates_fx_raw_pipeline` | `30 3 * * *` | no | active scheduled raw ingest |
+| `cbot_futures_raw_pipeline` | `30 3 * * *` | no | active scheduled raw ingest |
+| `cbot_contracts_raw_pipeline` | `45 3 * * *` | no | active scheduled raw ingest |
+| `comex_fertilizantes_raw_pipeline` | `45 4 * * *` | no | active scheduled raw ingest |
+| `conab_frete_raw_pipeline` | `15 4 * * *` | no | active scheduled raw ingest |
+| `ibge_ufs_regioes_raw_pipeline` | `0 2 * * 1` | no | active scheduled dimension/raw support |
+| `ibge_municipios_raw_pipeline` | `0 2 * * 1` | no | active scheduled dimension/raw support |
+| `sidra_lavouras_raw_pipeline` | `30 2 * * 1` | no | active scheduled raw ingest |
+| `raw_mapeia_tolls_snapshot_pipeline` | `15 2 * * *` | no | active scheduled toll source |
+| `raw_rss_update_news` | `0 3 * * *` | no | active scheduled news refresh |
+| `dim_toll_plaza_unified_pipeline` | `20 3 * * *` | no | corrected and validated with final DQ |
 
 ### prod-manual
-- `imea_precos_interior_raw_pipeline`
-- `cepea_precos_praca_raw_pipeline`
-- `estadual_precos_interior_raw_pipeline`
-- `dim_logistic_node_seed_pipeline`
-- `curated_antt_tarifa_base_pipeline`
+| DAG | schedule | paused | notes |
+|---|---|---:|---|
+| `imea_precos_interior_raw_pipeline` | `None` | no | corrected, validated, final DQ added |
+| `cepea_precos_praca_raw_pipeline` | `None` | no | corrected, validated, final DQ added |
+| `estadual_precos_interior_raw_pipeline` | `None` | no | corrected, validated, final DQ added |
+| `dim_logistic_node_seed_pipeline` | `None` | no | utility/manual seed pipeline |
+| `curated_antt_tarifa_base_pipeline` | `None` | yes | useful curated step, but still paused pending promotion decision |
 
 ### backfill
-- `raw_rss_update_news_backfill`
-- `wiki_dim_backfill`
+| DAG | schedule | paused | notes |
+|---|---|---:|---|
+| `raw_rss_update_news_backfill` | `None` | yes | historical replay only |
+| `wiki_dim_backfill` | `None` | yes | backfill/enrichment helper |
 
 ### lab
-- `route_analytics_staged_pipeline`
+| DAG | schedule | paused | notes |
+|---|---|---:|---|
+| `route_analytics_staged_pipeline` | `None` | yes | experimental/staged analytics |
 
 ### legacy-review
-- `dim_toll_plaza_pipeline`
-- `raw_antt_pracas_pedagio_pipeline`
-- `raw_antt_toll_economics_pipeline`
-- `curated_conab_frete_latest_pipeline`
-- `curated_diesel_price_latest_by_uf_pipeline`
-- `curated_ibge_municipios_pipeline`
-- `anp_diesel_raw_pipeline`
+| DAG | schedule | paused | notes |
+|---|---|---:|---|
+| `dim_toll_plaza_pipeline` | `None` | yes | superseded by `dim_toll_plaza_unified_pipeline` |
+| `raw_antt_pracas_pedagio_pipeline` | `None` | yes | source/support ingest, not active production schedule |
+| `raw_antt_toll_economics_pipeline` | `10 3 * * *` | yes | paused pending decision on production role |
+| `curated_conab_frete_latest_pipeline` | `None` | yes | table exists, but production role not yet confirmed |
+| `curated_diesel_price_latest_by_uf_pipeline` | `None` | yes | table exists, but production role not yet confirmed |
+| `curated_ibge_municipios_pipeline` | `None` | yes | older derived helper kept paused |
+| `anp_diesel_raw_pipeline` | `None` | no | unscheduled raw DAG still needs production decision |
 
 ## Naming target
 - Raw: `<source>_<entity>_raw_pipeline`
@@ -57,3 +77,4 @@ _Last updated: 2026-05-09 UTC_
 - Keep old DAG IDs paused during migrations when history matters.
 - Keep backups out of the live DAG directory.
 - Prefer explicit source labeling when fallback providers are used.
+- Treat `infra-harpy/deploy/airflow/dags` as the git mirror/source-of-truth snapshot for review history.
