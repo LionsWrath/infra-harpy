@@ -24,6 +24,7 @@ _Last updated: 2026-05-09 UTC_
 ### prod-scheduled
 | DAG | schedule | paused | notes |
 |---|---|---:|---|
+| `anp_diesel_raw_pipeline` | `0 9 5 * *` | no | monthly ANP raw upstream; promoted to prod-scheduled |
 | `bcb_rates_fx_raw_pipeline` | `30 3 * * *` | no | active scheduled raw ingest |
 | `cbot_futures_raw_pipeline` | `30 3 * * *` | no | active scheduled raw ingest |
 | `cbot_contracts_raw_pipeline` | `45 3 * * *` | no | active scheduled raw ingest |
@@ -65,7 +66,7 @@ _Last updated: 2026-05-09 UTC_
 | `curated_conab_frete_latest_pipeline` | `None` | yes | table exists, but production role not yet confirmed |
 | `curated_diesel_price_latest_by_uf_pipeline` | `None` | yes | table exists, but production role not yet confirmed |
 | `curated_ibge_municipios_pipeline` | `None` | yes | older derived helper kept paused |
-| `anp_diesel_raw_pipeline` | `None` | no | unscheduled raw DAG still needs production decision |
+| `anp_diesel_raw_pipeline` | `0 9 5 * *` | no | monthly ANP raw upstream; promoted to prod-scheduled |
 
 ## Naming target
 - Raw: `<source>_<entity>_raw_pipeline`
