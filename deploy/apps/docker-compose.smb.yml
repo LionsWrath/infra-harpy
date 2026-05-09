@@ -12,10 +12,8 @@ services:
     volumes:
       - "${SHARES_PATH}/home:/shares/home"
     ports:
-      - "445:445/tcp"
-      - "139:139/tcp"
-      - "137:137/udp"
-      - "138:138/udp"
+      - 445:445
+      - 139:139
     restart: unless-stopped
     env_file:
       - ../envs/base.env
