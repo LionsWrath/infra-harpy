@@ -12,8 +12,6 @@ services:
       - "${DATA_PATH}/nginx-proxy-manager:/data"
       - "${DATA_PATH}/letsencrypt:/etc/letsencrypt"
       - "${DATA_PATH}/nginx/snippets:/snippets:ro"
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
     networks:
       default:
         ipv4_address: "${LSIO_IP}.70"

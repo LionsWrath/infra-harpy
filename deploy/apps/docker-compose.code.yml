@@ -20,8 +20,6 @@ services:
       - "${DATA_PATH}/nginx:/config/workspace/nginx"
       - "${SOURCE_PATH}:/config/workspace/infra"
       - "${OPENCLAW_PATH}:/config/workspace/openclaw"
-      - "${DATA_PATH}/dev:/config/workspace/dev"
-      - "${DATA_PATH}/airflow/dags:/config/workspace/airflow-dags"
     networks:
       default:
         ipv4_address: "${LSIO_IP}.40"
@@ -30,29 +28,6 @@ services:
     restart: unless-stopped
     env_file:
       - ../envs/base.env
-
-
-  code-server-members:
-    image: lscr.io/linuxserver/code-server:latest
-    privileged: true
-    container_name: code-server-members
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - DEFAULT_WORKSPACE=/config/workspace
-      - PWA_APPNAME=code-server-members
-      - PASSWORD=${CODE_MEMBERS_PASSWORD}
-    volumes:
-      - "${DATA_PATH}/code-server-members:/config"
-      - "${DATA_PATH}/dev/members/airflow-dags:/config/workspace/airflow-dags"
-      - "${DATA_PATH}/dev/members/wiki-markdowns:/config/workspace/wiki-markdowns"
-    networks:
-      default:
-        ipv4_address: "${LSIO_IP}.41"
-    restart: unless-stopped
-    env_file:
-      - ../envs/base.env
-      - ../envs/code-members.env
 
 networks:
   default:
