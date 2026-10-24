@@ -1,0 +1,4 @@
+# Real env files stay on the hosts; commit *.env.example templates only
+deploy/envs/airflow.env
+deploy/envs/superset.env
+*.bak-*
