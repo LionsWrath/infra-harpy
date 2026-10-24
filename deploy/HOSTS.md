@@ -13,6 +13,8 @@ Each Docker host has one entry file listing exactly the stacks it runs:
 - Each include entry lists the env files used to fill `${...}` in that stack (`env_file:` on the include), the same
   as deploying it with `--env-file envs/base.env --env-file envs/<stack>.env`. A service's own `env_file` only
   sets container environment; it never feeds interpolation.
+- `envs/base.env` holds only shared, non-secret settings (`TZ`). Almost every container loads it, so a secret
+  there would reach all of them; put secrets in the stack's own env file instead.
 - `docker-compose.yml` is the old shared include list. It is deprecated and kept only for reference.
 
 ## Everyday use
