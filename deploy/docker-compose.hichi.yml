@@ -1,14 +1,24 @@
 # hichi: DNS, canonical Vaultwarden and edge services (*.chst.dev). Exactly the stacks that run here.
 # Files named *.hichi.yml are hichi variants of a shared stack (fixed IPs on 172.19.0.0/16, own DNS).
 # Use: scripts/compose.sh <args>   (picks this file from the hostname)
+# Each stack's env_file list feeds ${...} interpolation (like --env-file per stack).
 include:
-  - apps/docker-compose.base.yml          # nginx-proxy-manager, authelia, homepage
-  - apps/docker-compose.manage.yml        # portainer
-  - apps/docker-compose.monitoring.hichi.yml
-  - apps/docker-compose.curl.yml          # curlbox
-  - apps/docker-compose.db.hichi.yml      # postgres, pgadmin (no redis)
-  - apps/docker-compose.pihole.hichi.yml  # pihole, cloudflared
-  - apps/docker-compose.vw.yml            # vaultwarden (canonical)
-  - apps/docker-compose.searxng.yml
-  - apps/docker-compose.recipes.hichi.yml # mealie, pinned to the running version
-  - apps/docker-compose.vpn.yml           # wireguard
+  - path: apps/docker-compose.base.yml  # nginx-proxy-manager, authelia, homepage
+    env_file: [envs/base.env]
+  - path: apps/docker-compose.manage.yml  # portainer
+    env_file: [envs/base.env]
+  - path: apps/docker-compose.monitoring.hichi.yml
+    env_file: [envs/base.env]
+  - path: apps/docker-compose.curl.yml  # curlbox
+  - path: apps/docker-compose.db.hichi.yml  # postgres, pgadmin (no redis)
+    env_file: [envs/base.env, envs/db_pg.env, envs/db_pgadmin.env]
+  - path: apps/docker-compose.pihole.hichi.yml  # pihole, cloudflared
+    env_file: [envs/base.env]
+  - path: apps/docker-compose.vw.yml  # vaultwarden (canonical)
+    env_file: [envs/db_vaultwarden.env]
+  - path: apps/docker-compose.searxng.yml
+    env_file: [envs/base.env, envs/searxng.env]
+  - path: apps/docker-compose.recipes.hichi.yml  # mealie, pinned to the running version
+    env_file: [envs/base.env, envs/db_recipes.env]
+  - path: apps/docker-compose.vpn.yml  # wireguard
+    env_file: [envs/base.env]

@@ -43,9 +43,7 @@ else
 fi
 
 # bind-mount sources (parsed in-process; values are never printed)
-extra=()
-for e in ${COMPOSE_INTERPOLATION_ENV_FILES:-}; do extra+=(--env-file "$e"); done
-mapfile -t mounts < <(cd "$deploy" && docker compose -p "${COMPOSE_PROJECT_NAME:-apps}" "${extra[@]}" -f "$file" config --format json 2>/dev/null | python3 -c '
+mapfile -t mounts < <(cd "$deploy" && docker compose -p "${COMPOSE_PROJECT_NAME:-apps}" -f "$file" config --format json 2>/dev/null | python3 -c '
 import json, sys
 cfg = json.load(sys.stdin)
 for svc in cfg.get("services", {}).values():

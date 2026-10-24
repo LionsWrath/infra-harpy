@@ -25,7 +25,5 @@ set -a
 [[ -f $deploy/hosts/$host.sh ]] && . "$deploy/hosts/$host.sh"
 set +a
 cd "$deploy"
-extra=()
-for e in ${COMPOSE_INTERPOLATION_ENV_FILES:-}; do extra+=(--env-file "$e"); done
 # Existing containers belong to project "apps" (the old deploy/apps working dir); keep it so compose owns them
-exec docker compose -p "${COMPOSE_PROJECT_NAME:-apps}" "${extra[@]}" -f "$file" "$@"
+exec docker compose -p "${COMPOSE_PROJECT_NAME:-apps}" -f "$file" "$@"

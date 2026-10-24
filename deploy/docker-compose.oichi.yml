@@ -1,28 +1,49 @@
 # oichi: main Docker host (*.orochi.chst.dev). Exactly the stacks that run here.
 # Use: scripts/compose.sh <args>   (picks this file from the hostname)
+# Each stack's env_file list feeds ${...} interpolation (like --env-file per stack).
 include:
   # edge and ops
-  - apps/docker-compose.base.yml          # nginx-proxy-manager, authelia, homepage
-  - apps/docker-compose.manage.yml        # portainer
-  - apps/docker-compose.monitoring.yml    # uptime-kuma
-  - apps/docker-compose.curl.yml          # curlbox
+  - path: apps/docker-compose.base.yml  # nginx-proxy-manager, authelia, homepage
+    env_file: [envs/base.env]
+  - path: apps/docker-compose.manage.yml  # portainer
+    env_file: [envs/base.env]
+  - path: apps/docker-compose.monitoring.yml  # uptime-kuma
+    env_file: [envs/base.env]
+  - path: apps/docker-compose.curl.yml  # curlbox
   # data platform
-  - apps/docker-compose.db.yml            # pgadmin, redis
-  - apps/docker-compose.wiki.yml          # postgres, wiki
-  - apps/docker-compose.airflow.yml
-  - apps/docker-compose.trino-iceberg.yml # nessie, trino
-  - apps/docker-compose.superset.yml
+  - path: apps/docker-compose.db.yml  # pgadmin, redis
+    env_file: [envs/base.env, envs/db_pg.env, envs/db_pgadmin.env]
+  - path: apps/docker-compose.wiki.yml  # postgres, wiki
+    env_file: [envs/base.env, envs/wiki.env]
+  - path: apps/docker-compose.airflow.yml
+    env_file: [envs/base.env, envs/airflow.env]
+  - path: apps/docker-compose.trino-iceberg.yml  # nessie, trino
+    env_file: [envs/base.env, envs/db_pg.env]
+  - path: apps/docker-compose.superset.yml
+    env_file: [envs/base.env, envs/superset.env]
   # dev, docs, files
-  - apps/docker-compose.gitea.yml
-  - apps/docker-compose.code.yml          # code-server, code-server-members
-  - apps/docker-compose.vikunja.yml
-  - apps/docker-compose.paperless.yml
-  - apps/docker-compose.smb.yml
-  - apps/docker-compose.recipes.yml       # mealie
+  - path: apps/docker-compose.gitea.yml
+    env_file: [envs/base.env, envs/db_gitea.env]
+  - path: apps/docker-compose.code.yml  # code-server, code-server-members
+    env_file: [envs/base.env, envs/code-members.env]
+  - path: apps/docker-compose.vikunja.yml
+    env_file: [envs/base.env, envs/vikunja.env]
+  - path: apps/docker-compose.paperless.yml
+    env_file: [envs/base.env, envs/db_paperless.env]
+  - path: apps/docker-compose.smb.yml
+    env_file: [envs/base.env, envs/db_smb.env]
+  - path: apps/docker-compose.recipes.yml  # mealie
+    env_file: [envs/base.env, envs/db_recipes.env]
   # media
-  - apps/docker-compose.media.yml         # *arr, qbittorrent, flaresolverr
-  - apps/docker-compose.vpn.yml           # wireguard
-  - apps/docker-compose.prowlarr.yml
-  - apps/docker-compose.jelly.yml
-  - apps/docker-compose.ytdl-sub.yml
-  - apps/docker-compose.faster-whisper.yml
+  - path: apps/docker-compose.media.yml  # *arr, qbittorrent, flaresolverr
+    env_file: [envs/base.env]
+  - path: apps/docker-compose.vpn.yml  # wireguard
+    env_file: [envs/base.env]
+  - path: apps/docker-compose.prowlarr.yml
+    env_file: [envs/base.env]
+  - path: apps/docker-compose.jelly.yml
+    env_file: [envs/base.env]
+  - path: apps/docker-compose.ytdl-sub.yml
+    env_file: [envs/base.env]
+  - path: apps/docker-compose.faster-whisper.yml
+    env_file: [envs/base.env]

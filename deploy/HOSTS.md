@@ -9,8 +9,10 @@ Each Docker host has one entry file listing exactly the stacks it runs:
 
 - Shared stacks live in `apps/docker-compose.<stack>.yml`. A host variant (`<stack>.<host>.yml`) exists only where a
   host really differs (fixed IPs, DNS settings, pinned image).
-- `hosts/<host>.sh` holds non-secret interpolation variables that differ from `scripts/vars.sh`, and
-  `COMPOSE_INTERPOLATION_ENV_FILES` for compose files that interpolate values kept in env files.
+- `hosts/<host>.sh` holds non-secret interpolation variables that differ from `scripts/vars.sh`.
+- Each include entry lists the env files used to fill `${...}` in that stack (`env_file:` on the include), the same
+  as deploying it with `--env-file envs/base.env --env-file envs/<stack>.env`. A service's own `env_file` only
+  sets container environment; it never feeds interpolation.
 - `docker-compose.yml` is the old shared include list. It is deprecated and kept only for reference.
 
 ## Everyday use

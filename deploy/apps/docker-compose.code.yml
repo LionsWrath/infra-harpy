@@ -20,6 +20,8 @@ services:
       - "${DATA_PATH}/nginx:/config/workspace/nginx"
       - "${SOURCE_PATH}:/config/workspace/infra"
       - "${OPENCLAW_PATH}:/config/workspace/openclaw"
+      - "${DATA_PATH}/airflow/dags:/config/workspace/airflow-dags"
+      - "${DATA_PATH}/dev:/config/workspace/dev"
     networks:
       default:
         ipv4_address: "${LSIO_IP}.40"

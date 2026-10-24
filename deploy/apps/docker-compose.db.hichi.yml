@@ -3,10 +3,10 @@ version: '3.1'
 services:
 
   postgres:
-    image: "postgres"
+    image: "postgres:16"  # pinned: data dir is PostgreSQL 16
     container_name: "postgres"
     volumes:
-      - "${DATA_PATH}/db:/var/lib/postgresql"
+      - "${DATA_PATH}/db:/var/lib/postgresql/data"
     restart: always
     env_file:
       - ../envs/db_pg.env

@@ -3,7 +3,7 @@ version: '3.1'
 services:
 
   postgres:
-    image: "postgres"
+    image: "postgres:18"  # pinned: data dir is PostgreSQL 18
     container_name: "postgres"
     volumes:
       - "${DATA_PATH}/db:/var/lib/postgresql"
