@@ -86,6 +86,17 @@ services:
     env_file:
       - ../envs/base.env
 
+  flaresolverr:
+    image: ghcr.io/flaresolverr/flaresolverr:latest
+    container_name: flaresolverr
+    environment:
+      - LOG_LEVEL=info
+      - HOST=0.0.0.0
+      - PORT=8191
+    restart: unless-stopped
+    env_file:
+      - ../envs/base.env
+
 networks:
   default:
     name: lsio

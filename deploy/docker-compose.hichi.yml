@@ -1,0 +1,14 @@
+# hichi: DNS, canonical Vaultwarden and edge services (*.chst.dev). Exactly the stacks that run here.
+# Files named *.hichi.yml are hichi variants of a shared stack (fixed IPs on 172.19.0.0/16, own DNS).
+# Use: scripts/compose.sh <args>   (picks this file from the hostname)
+include:
+  - apps/docker-compose.base.yml          # nginx-proxy-manager, authelia, homepage
+  - apps/docker-compose.manage.yml        # portainer
+  - apps/docker-compose.monitoring.hichi.yml
+  - apps/docker-compose.curl.yml          # curlbox
+  - apps/docker-compose.db.hichi.yml      # postgres, pgadmin (no redis)
+  - apps/docker-compose.pihole.hichi.yml  # pihole, cloudflared
+  - apps/docker-compose.vw.yml            # vaultwarden (canonical)
+  - apps/docker-compose.searxng.yml
+  - apps/docker-compose.recipes.hichi.yml # mealie, pinned to the running version
+  - apps/docker-compose.vpn.yml           # wireguard

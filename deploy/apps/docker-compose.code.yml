@@ -29,6 +29,28 @@ services:
     env_file:
       - ../envs/base.env
 
+  # Restricted workspace for members (reconstructed 2026-10-24 from the running container)
+  code-server-members:
+    image: lscr.io/linuxserver/code-server:latest
+    container_name: code-server-members
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - "PASSWORD=${CODE_MEMBERS_PASSWORD}"
+      - DEFAULT_WORKSPACE=/config/workspace
+      - PWA_APPNAME=code-server-members
+    volumes:
+      - "${DATA_PATH}/code-server-members:/config"
+      - "${DATA_PATH}/dev/members/airflow-dags:/config/workspace/airflow-dags"
+      - "${DATA_PATH}/dev/members/wiki-markdowns:/config/workspace/wiki-markdowns"
+    networks:
+      default:
+        ipv4_address: "${LSIO_IP}.41"
+    restart: unless-stopped
+    env_file:
+      - ../envs/base.env
+      - ../envs/code-members.env
+
 networks:
   default:
     name: lsio

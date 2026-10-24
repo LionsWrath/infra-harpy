@@ -1,0 +1,22 @@
+services:
+  ytdl-sub:
+    image: ghcr.io/jmbannon/ytdl-sub:latest
+    container_name: ytdl-sub
+    restart: unless-stopped
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - CRON_RUN_ON_START=false
+      - UPDATE_YT_DLP_ON_START=stable
+    env_file:
+      - ../envs/base.env
+    volumes:
+      - /home/lionswrath/data/services/ytdl-sub/config:/config
+      - /home/lionswrath/data/services/ytdl-sub/downloads:/downloads
+    networks:
+      - default
+
+networks:
+  default:
+    name: lsio
+    external: true

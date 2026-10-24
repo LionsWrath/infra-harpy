@@ -1,10 +1,11 @@
+# DEPRECATED: shared include list from before per-host files. It never matched what runs on either host.
+# Use docker-compose.<host>.yml via scripts/compose.sh instead.
 # Change ordering and test later
 
 include:
   - "/apps/docker-compose.base.yml"
   - "/apps/docker-compose.data.yml"
   - "/apps/docker-compose.db.yml"
-  - "/apps/docker-compose.files.yml"
   - "/apps/docker-compose.manage.yml"
   - "/apps/docker-compose.airflow.yml"
   - "/apps/docker-compose.trino-iceberg.yml"

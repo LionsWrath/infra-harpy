@@ -1,0 +1,47 @@
+version: "3"
+
+services:
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:latest
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+        #- 80:80 # Debug
+    environment:
+      - PROXY_LOCATION=pihole
+      - VIRTUAL_HOST=pihole.chst.dev
+    networks:
+      default:
+        ipv4_address: "172.19.0.80"
+    volumes:
+      - "${DATA_PATH}/pihole/etc-pihole:/etc/pihole"
+      - "${DATA_PATH}/pihole/etc-dnsmasq.d:/etc/dnsmasq.d"
+    restart: unless-stopped
+    env_file:
+      - ../envs/base.env
+
+  cloudflared:
+    container_name: cloudflared
+    image: cloudflare/cloudflared:latest
+    restart: unless-stopped
+    command: proxy-dns
+    # See the list of environment variables at https://github.com/cloudflare/cloudflared/blob/master/cmd/cloudflared/proxydns/cmd.go
+    environment:
+      - "TUNNEL_DNS_UPSTREAM=https://dns.mullvad.net/dns-query,https://dns.quad9.net/dns-query"
+      - "TUNNEL_DNS_PORT=5053"
+      - "TUNNEL_DNS_ADDRESS=0.0.0.0"
+      - "TUNNEL_DNS_BOOTSTRAP=1.1.1.1,9.9.9.9,1.0.0.1"
+    dns:
+      - 1.1.1.1
+      - 9.9.9.9
+    networks:
+      default:
+        ipv4_address: "172.19.0.60"
+    env_file:
+      - ../envs/base.env
+
+networks:
+  default:
+    name: lsio
+    external: true

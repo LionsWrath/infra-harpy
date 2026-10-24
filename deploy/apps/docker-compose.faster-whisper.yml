@@ -1,0 +1,26 @@
+services:
+  faster-whisper:
+    image: lscr.io/linuxserver/faster-whisper:latest
+    container_name: faster-whisper
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - WHISPER_LANG=auto
+      - WHISPER_MODEL=small
+      - WHISPER_BEAM=1
+      # - LOCAL_ONLY=true   # optional: only use local models
+      # - DEBUG=true        # optional
+    env_file:
+      - ../envs/base.env
+    volumes:
+      - /home/lionswrath/data/services/faster-whisper/config:/config
+      - /home/lionswrath/data/services/faster-whisper/audio:/audio
+      - /home/lionswrath/data/services/faster-whisper/transcriptions:/transcriptions
+    restart: unless-stopped
+    networks:
+      - default
+
+networks:
+  default:
+    name: lsio
+    external: true

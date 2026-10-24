@@ -1,0 +1,28 @@
+# oichi: main Docker host (*.orochi.chst.dev). Exactly the stacks that run here.
+# Use: scripts/compose.sh <args>   (picks this file from the hostname)
+include:
+  # edge and ops
+  - apps/docker-compose.base.yml          # nginx-proxy-manager, authelia, homepage
+  - apps/docker-compose.manage.yml        # portainer
+  - apps/docker-compose.monitoring.yml    # uptime-kuma
+  - apps/docker-compose.curl.yml          # curlbox
+  # data platform
+  - apps/docker-compose.db.yml            # pgadmin, redis
+  - apps/docker-compose.wiki.yml          # postgres, wiki
+  - apps/docker-compose.airflow.yml
+  - apps/docker-compose.trino-iceberg.yml # nessie, trino
+  - apps/docker-compose.superset.yml
+  # dev, docs, files
+  - apps/docker-compose.gitea.yml
+  - apps/docker-compose.code.yml          # code-server, code-server-members
+  - apps/docker-compose.vikunja.yml
+  - apps/docker-compose.paperless.yml
+  - apps/docker-compose.smb.yml
+  - apps/docker-compose.recipes.yml       # mealie
+  # media
+  - apps/docker-compose.media.yml         # *arr, qbittorrent, flaresolverr
+  - apps/docker-compose.vpn.yml           # wireguard
+  - apps/docker-compose.prowlarr.yml
+  - apps/docker-compose.jelly.yml
+  - apps/docker-compose.ytdl-sub.yml
+  - apps/docker-compose.faster-whisper.yml

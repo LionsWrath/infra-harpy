@@ -1,0 +1,29 @@
+version: "2.2"
+
+services:
+  searxng:
+    image: "searxng/searxng:latest"
+    container_name: "searxng"
+    environment:
+      - "SEARXNG_BASE_URL=${SEARXNG_BASE_URL}"
+      - "SEARXNG_SECRET=${SEARXNG_SECRET}"
+      - "SEARXNG_INSTANCE_NAME=${SEARXNG_INSTANCE_NAME}"
+      - "SEARXNG_AUTOCOMPLETE=${SEARXNG_AUTOCOMPLETE}"
+      - "DATA_PATH=/var/cache/searxng"
+    volumes:
+      - "/home/hichi/data/services/searxng:/etc/searxng"
+    restart: "unless-stopped"
+    dns:
+      - "1.1.1.1"
+      - "9.9.9.9"
+    networks:
+      default:
+        ipv4_address: "172.19.0.84"
+    env_file:
+      - ../envs/base.env
+      - ../envs/searxng.env
+
+networks:
+  default:
+    name: lsio
+    external: true

@@ -1,0 +1,18 @@
+services:
+  uptime-kuma:
+    image: "louislam/uptime-kuma:1"
+    container_name: "uptime-kuma"
+    environment:
+      - "TZ=${TZ}"
+    volumes:
+      - "${DATA_PATH}/uptime-kuma:/app/data"
+    restart: "unless-stopped"
+    dns:
+      - "172.19.0.80"
+    networks:
+      - default
+
+networks:
+  default:
+    name: lsio
+    external: true

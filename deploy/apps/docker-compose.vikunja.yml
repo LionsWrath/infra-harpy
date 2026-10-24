@@ -1,0 +1,32 @@
+version: "3.1"
+
+services:
+  vikunja:
+    image: vikunja/vikunja:latest
+    container_name: vikunja
+    restart: unless-stopped
+    environment:
+      - VIKUNJA_SERVICE_PUBLICURL=https://vikunja.orochi.chst.dev/
+      - VIKUNJA_DATABASE_TYPE=postgres
+      - VIKUNJA_DATABASE_HOST=postgres
+      - VIKUNJA_DATABASE_PORT=5432
+      - VIKUNJA_DATABASE_USER=${VIKUNJA_DB_USER}
+      - VIKUNJA_DATABASE_PASSWORD=${VIKUNJA_DB_PASS}
+      - VIKUNJA_DATABASE_DATABASE=${VIKUNJA_DB_NAME}
+      - VIKUNJA_FILES_BASE_PATH=/app/vikunja/files
+      - HOME=/tmp
+      - XDG_CACHE_HOME=/tmp/.cache
+    volumes:
+      - "/home/lionswrath/data/services/vikunja/files:/app/vikunja/files"
+      - "/home/lionswrath/data/services/vikunja/cache:/tmp/.cache"
+    env_file:
+      - ../envs/base.env
+      - ../envs/vikunja.env
+    networks:
+      default:
+        ipv4_address: "${LSIO_IP}.96"
+
+networks:
+  default:
+    name: lsio
+    external: true

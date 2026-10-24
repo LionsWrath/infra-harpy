@@ -1,3 +1,4 @@
 # Real env files stay on the hosts; commit *.env.example templates only
 deploy/envs/*.env
+deploy/**/*.env
 *.bak-*

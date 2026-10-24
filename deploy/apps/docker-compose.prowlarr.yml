@@ -1,0 +1,23 @@
+version: "2.1"
+
+services:
+
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+    volumes:
+      - "${DATA_PATH}/prowlarr:/config"
+    networks:
+      default:
+        ipv4_address: "${LSIO_IP}.28"
+    restart: unless-stopped
+    env_file:
+      - ../envs/base.env
+
+networks:
+  default:
+    name: lsio
+    external: true
