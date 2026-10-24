@@ -34,7 +34,7 @@ Containers created by older compose versions are recreated on the next `up` even
 
 ## Full re-setup of a host
 1. Provision the VM: Docker with compose >= 2.20, Tailscale, SSH key access.
-2. Clone this repo (`~/infra-harpy` on oichi; hichi currently deploys from `~/terraform`, same repo).
+2. Clone this repo to `~/infra-harpy` (both hosts).
 3. Materialize the host's env set from the secrets store into `deploy/` (writes `envs/*.env` and
    `scripts/vars.sh`; real values never come from Git).
 4. Check, then prepare:
