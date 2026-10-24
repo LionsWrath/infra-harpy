@@ -9,6 +9,8 @@ include:
   - "/apps/docker-compose.airflow.yml"
   - "/apps/docker-compose.trino-iceberg.yml"
   - "/apps/docker-compose.superset.yml"
+  - "/apps/docker-compose.wiki.yml"
+  - "/apps/docker-compose.vikunja.yml"
   - "/apps/docker-compose.media.yml"
   - "/apps/docker-compose.monitoring.yml"
   - "/apps/docker-compose.gitea.yml"
@@ -18,3 +20,4 @@ include:
   - "/apps/docker-compose.vpn.yml"
   - "/apps/docker-compose.vw.yml"
 
+  - "/apps/docker-compose.osrm.yml"

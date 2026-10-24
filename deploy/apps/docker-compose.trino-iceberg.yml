@@ -8,7 +8,11 @@ services:
     environment:
       - "TZ=${TZ}"
       - "QUARKUS_HTTP_PORT=19120"
-      - "NESSIE_VERSION_STORE_TYPE=IN_MEMORY"
+      - "NESSIE_VERSION_STORE_TYPE=jdbc"
+      - "QUARKUS_DATASOURCE_DB_KIND=postgresql"
+      - "QUARKUS_DATASOURCE_JDBC_URL=jdbc:postgresql://postgres:5432/nessie"
+      - "QUARKUS_DATASOURCE_USERNAME=${POSTGRES_USER}"
+      - "QUARKUS_DATASOURCE_PASSWORD=${POSTGRES_PASSWORD}"
       - "VIRTUAL_HOST=nessie.orochi.chst.dev"
       - "VIRTUAL_PORT=19120"
     volumes:
@@ -19,6 +23,7 @@ services:
         ipv4_address: "${LSIO_IP}.87"
     env_file:
       - ../envs/base.env
+      - ../envs/db_pg.env
 
   trino:
     image: "trinodb/trino:latest"
@@ -31,7 +36,10 @@ services:
       - "VIRTUAL_PORT=8080"
     volumes:
       - "${DATA_PATH}/trino/config.properties:/etc/trino/config.properties"
+      - "${DATA_PATH}/trino/jvm.config:/etc/trino/jvm.config"
       - "${DATA_PATH}/trino/catalog:/etc/trino/catalog"
+      - "${DATA_PATH}/trino/runtime:/data/trino"
+      - "${DATA_PATH}/trino/tmp:/tmp"
       - "/home/lionswrath/data/lake:/data/lake"
     restart: "unless-stopped"
     networks:
