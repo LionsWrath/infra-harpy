@@ -70,22 +70,6 @@ services:
     env_file:
       - ../envs/base.env
 
-  jackett:
-    image: lscr.io/linuxserver/jackett:latest
-    container_name: jackett
-    depends_on:
-      - qbittorrent
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - AUTO_UPDATE=true
-    volumes:
-      - "${DATA_PATH}/jackett:/config"
-      - "${DATA_PATH}/files/blackhole:/downloads"
-    restart: no
-    env_file:
-      - ../envs/base.env
-
   flaresolverr:
     image: ghcr.io/flaresolverr/flaresolverr:latest
     container_name: flaresolverr

@@ -12,7 +12,7 @@ RAW_TABLE = "iceberg.oidw.raw_cepea_precos_praca"
 LANDING_BASE = Path("/data/lake/landing/cepea_precos_praca")
 
 CEPEA_BASE = "https://www.cepea.org.br/br/indicador"
-FLARESOLVERR_URL = os.getenv("FLARESOLVERR_URL", "http://jackett:8191/v1")
+FLARESOLVERR_URL = os.getenv("FLARESOLVERR_URL", "http://flaresolverr:8191/v1")
 FALLBACK_BASE = "https://www.noticiasagricolas.com.br/cotacoes"
 FALLBACK_SOURCE_NAME = "NOTICIAS_AGRICOLAS_CEPEA_FALLBACK"
 
